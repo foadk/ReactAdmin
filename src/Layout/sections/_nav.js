@@ -15,7 +15,7 @@ export default {
     },
     {
       title: true,
-      name: 'Theme',
+      name: 'تم',
       wrapper: {            // optional wrapper object
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
@@ -23,18 +23,18 @@ export default {
       class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'Colors',
+      name: 'رنگ ها',
       url: '/theme/colors',
       icon: 'icon-drop',
     },
     {
-      name: 'Typography',
+      name: 'تایپوگرافی',
       url: '/theme/typography',
       icon: 'icon-pencil',
     },
     {
       title: true,
-      name: 'Components',
+      name: 'کامپوننت ها',
       wrapper: {
         element: '',
         attributes: {},

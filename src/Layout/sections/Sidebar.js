@@ -1,12 +1,45 @@
 import React, { Component } from 'react';
 
+import navigationItems from './_nav';
+
+const buildNavigation = (navItems) => {
+    const result = navItems.map(item => {
+        if (item.title === true) {
+            return (<li className="nav-title">{item.name}</li>);
+        } else if (item.hasOwnProperty('divider')) {
+            return (<li className="divider"></li>);
+        } else {
+            let hi = null;
+            let res = (
+                <li className={"nav-item" + (item.hasOwnProperty('children') ? " nav-dropdown" : "")}>
+                    <a className={"nav-link" + (item.hasOwnProperty('children') ? " nav-dropdown-toggle" : "") + 
+                    (item.hasOwnProperty('variant') ? " nav-link-" + item.variant : "")}
+                        href={!item.hasOwnProperty('children') ? item.url : "#"}>
+                        <i className={item.icon} ></i>
+                        {item.name}
+                        {item.hasOwnProperty('badge') ?
+                        <span className={"tag tag-" + item.badge.variant}>{item.badge.text}</span> : ''}
+                    </a>
+                    {item.hasOwnProperty('children') ?
+                        <ul className="nav-dropdown-items">{buildNavigation(item.children)}</ul> : ''}
+                </li>
+            );
+            return res;
+        }
+    });
+    return result;
+}
+
 class Sidebar extends Component {
+
     render() {
+        const navigaiton = buildNavigation(navigationItems.items);
         return (
             <div className="sidebar">
                 <nav className="sidebar-nav">
                     <ul className="nav">
-                        <li className="nav-item">
+                        {navigaiton}
+                        {/* <li className="nav-item">
                             <a className="nav-link" href="index.html"><i className="icon-speedometer" /> داشبرد <span className="tag tag-info">جدید</span></a>
                         </li>
                         <li className="nav-title">
@@ -14,7 +47,11 @@ class Sidebar extends Component {
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#"><i className="icon-user-follow" /> ثبت کاربر</a>
+                        </li>
+                        <li className="nav-item">
                             <a className="nav-link" href="#"><i className="icon-people" /> لیست کاربران</a>
+                        </li>
+                        <li className="nav-item">
                             <a className="nav-link" href="#"><i className="icon-user-following" /> دسترسی کاربران</a>
                         </li>
                         <li className="nav-title">
@@ -99,7 +136,7 @@ class Sidebar extends Component {
                                         <i className="nav-icon icon-puzzle" /> Tooltips</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> */}
 
                     </ul>
                 </nav>
