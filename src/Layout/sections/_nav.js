@@ -226,6 +226,7 @@ export default {
       },
     },
     {
+      name: 'divider1',
       divider: true,
     },
     {
