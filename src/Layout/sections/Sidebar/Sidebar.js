@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import navigationItems from '../../../_nav';
 
@@ -20,15 +21,15 @@ class Sidebar extends Component {
             } else {
                 let res = (
                     <li key={item.name} className={"nav-item" + (item.hasOwnProperty('children') ? " nav-dropdown" : "")}>
-                        <a className={"nav-link" + (item.hasOwnProperty('children') ? " nav-dropdown-toggle" : "") +
+                        <Link className={"nav-link" + (item.hasOwnProperty('children') ? " nav-dropdown-toggle" : "") +
                             (item.hasOwnProperty('variant') ? " nav-link-" + item.variant : "")}
                             onClick={this.itemClickHandler}
-                            href={!item.hasOwnProperty('children') ? item.url : "#"}>
+                            to={!item.hasOwnProperty('children') ? item.url : "#"}>
                             <i className={item.icon} ></i>
                             {item.name}
                             {item.hasOwnProperty('badge') ?
                                 <span className={"tag tag-" + item.badge.variant}>{item.badge.text}</span> : ''}
-                        </a>
+                        </Link>
                         {item.hasOwnProperty('children') ?
                             <ul className="nav-dropdown-items">{this.buildNavigation(item.children)}</ul> : ''}
                     </li>
