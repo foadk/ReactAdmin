@@ -10,8 +10,8 @@ export default {
       },
     },
     {
-      name: 'Json Menu Test',
-      url: '/json-menu-test'
+      name: 'کارت ها',
+      url: '/cards'
     },
     {
       title: true,
