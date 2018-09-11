@@ -14,6 +14,10 @@ export default {
       url: '/cards'
     },
     {
+      name: 'کاربران',
+      url: '/users'
+    },
+    {
       title: true,
       name: 'تم',
       wrapper: {            // optional wrapper object
