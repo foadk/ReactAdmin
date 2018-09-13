@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import Axios from '../../../connection/axios';
+import {addActionsToRows, prepHeaders} from '../../../utils/datatable';
 
 import './Datatable.css'
 // import Link from './Link';
@@ -9,12 +10,10 @@ import './Datatable.css'
 class Datatable extends Component {
 
     state = {
-        header: [],
+        headers: [],
         data: [],
         pages: -1,
         loading: true,
-        sorted: [],
-        filtered: []
     }
 
     onDeleteHandler = (id) => {
@@ -24,19 +23,21 @@ class Datatable extends Component {
 
     fetchData = (state, instance) => {
         this.setState({ loading: true });
-        Axios.post(this.props.url, {
+        Axios.post(this.props.url + 'datatable', {
             page: state.page,
             pageSize: state.pageSize,
             sorted: state.sorted,
             filtered: state.filtered
         }).then((res) => {
+            const headers = prepHeaders(res.data.headers);
+            const rows = addActionsToRows(res.data.rows, res.data.headers.actions)
+            console.log(headers);
+            console.log(rows);
             this.setState({
-                data: res.data.data,
+                headers: headers,
+                data: rows,
                 pages: res.data.pages,
-                // sorted: res.data.sorted,
-                // filtered: res.data.filtered,
                 loading: false,
-                header: res.data.header
             });
         }).catch(err => {
             console.log(err);
@@ -51,7 +52,7 @@ class Datatable extends Component {
                     this.selectTable = r;
                 }}
                 manual
-                columns={this.state.header}
+                columns={this.state.headers}
                 data={this.state.data}
                 pages={this.state.pages}
                 loading={this.state.loading}

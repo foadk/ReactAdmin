@@ -12,7 +12,6 @@ class Content extends Component {
                 component={route.component}
                 exact={route.exact === true ? true : false} />
         });
-        console.log(generatedRoutes);
         return (
             <div className="container-fluid">
                 <div className="animated fadeIn">

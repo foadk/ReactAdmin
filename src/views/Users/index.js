@@ -7,9 +7,9 @@ class Users extends Component {
             <div className='row'>
                 <div className='col-md-12'>
                     <div className='card'>
-                        <div class="card-header">لیست کاربران</div>
-                        <div className='card-body'>
-                            <Datatable url='api/users/datatable' />
+                        <div className="card-header">لیست کاربران</div>
+                        <div className='card-body' style={{padding: '7px'}}>
+                            <Datatable url='api/users/' />
                         </div>
                     </div>
                 </div>
