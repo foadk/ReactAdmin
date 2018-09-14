@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import Axios from '../../../connection/axios';
-import {addActionsToRows, prepHeaders} from '../../../utils/datatable';
 
-import './Datatable.css'
-// import Link from './Link';
+import './Datatable.css';
+import { prepHeaders } from '../../../utils/datatable';
+import FontawesomeIcon from '../../../components/UI/fontawesomeIcon/fontawesomeIcon';
 
 class Datatable extends Component {
 
@@ -16,9 +16,30 @@ class Datatable extends Component {
         loading: true,
     }
 
+    actionIcons = {
+        delete: { icon: 'trash', title: 'حذف', click: (id) => this.onDeleteHandler(id) },
+        edit: { icon: 'edit', title: "ویرایش", click: () => null },
+        quick_edit: { icon: 'pencil', title: "ویرایش سریع", click: () => null },
+    }
+
     onDeleteHandler = (id) => {
-        const arrayCopy = this.state.data.filter((row) => row.id !== id);
-        this.setState({ data: arrayCopy });
+        console.log(id);
+        // const arrayCopy = this.state.data.filter((row) => row.id !== id);
+        // this.setState({ data: arrayCopy });
+    }
+
+    addActionsToRows = (rows, actions) => {
+        const newRows = rows.map(row => {
+            for (const action in actions) {
+                row[action] = <FontawesomeIcon
+                    icon={this.actionIcons[action].icon}
+                    title={this.actionIcons[action].title}
+                    iconClicked={() => this.actionIcons[action].click(row['id'])}
+                    classes="pointer" />;
+            }
+            return row;
+        });
+        return newRows;
     }
 
     fetchData = (state, instance) => {
@@ -30,7 +51,7 @@ class Datatable extends Component {
             filtered: state.filtered
         }).then((res) => {
             const headers = prepHeaders(res.data.headers);
-            const rows = addActionsToRows(res.data.rows, res.data.headers.actions)
+            const rows = this.addActionsToRows(res.data.rows, res.data.headers.actions)
             console.log(headers);
             console.log(rows);
             this.setState({
