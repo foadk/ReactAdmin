@@ -23,14 +23,12 @@ class Datatable extends Component {
     }
 
     componentDidMount() {
-        this.setState({ loading: true });
         Axios.get(this.props.url + 'datatable/headers')
             .then(res => {
                 const headers = prepHeaders(res.data);
                 this.setState({ headers: headers });
                 this.setState({ loading: false });
             }).catch(err => {
-                this.setState({ loading: false });
             });
     }
 
