@@ -18,8 +18,20 @@ class Datatable extends Component {
 
     actionIcons = {
         delete: { icon: 'trash', title: 'حذف', click: (id) => this.onDeleteHandler(id) },
-        edit: { icon: 'edit', title: "ویرایش", click: () => null },
-        quick_edit: { icon: 'pencil', title: "ویرایش سریع", click: () => null },
+        edit: { icon: 'edit', title: 'ویرایش', click: () => null },
+        quick_edit: { icon: 'pencil', title: 'ویرایش سریع', click: () => null },
+    }
+
+    componentDidMount() {
+        this.setState({ loading: true });
+        Axios.get(this.props.url + 'datatable/headers')
+            .then(res => {
+                const headers = prepHeaders(res.data);
+                this.setState({ headers: headers });
+                this.setState({ loading: false });
+            }).catch(err => {
+                this.setState({ loading: false });
+            });
     }
 
     onDeleteHandler = (id) => {
@@ -50,12 +62,8 @@ class Datatable extends Component {
             sorted: state.sorted,
             filtered: state.filtered
         }).then((res) => {
-            const headers = prepHeaders(res.data.headers);
-            const rows = this.addActionsToRows(res.data.rows, res.data.headers.actions)
-            console.log(headers);
-            console.log(rows);
+            const rows = this.addActionsToRows(res.data.rows, this.state.headers.actions)
             this.setState({
-                headers: headers,
                 data: rows,
                 pages: res.data.pages,
                 loading: false,
