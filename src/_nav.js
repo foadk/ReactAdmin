@@ -15,7 +15,20 @@ export default {
     },
     {
       name: 'کاربران',
-      url: '/users'
+      url: '/users',
+      icon:'icon-people',
+      children: [
+        {
+          name: 'مشاهده کاربران',
+          url: '/users',
+          icon: 'icon-eye'
+        },
+        {
+          name: 'افزودن کاربر',
+          url: '/users/add',
+          icon: 'icon-plus'
+        }
+      ]
     },
     {
       title: true,
