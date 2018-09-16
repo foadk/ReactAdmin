@@ -22,18 +22,13 @@ class Datatable extends Component {
         quick_edit: { icon: 'pencil', title: 'ویرایش سریع', click: () => null },
     }
 
-    componentDidMount() {
-        Axios.get(this.props.url + 'datatable/headers')
-            .then(res => {
-                const headers = prepHeaders(res.data);
-                this.setState({ headers: headers });
-                this.setState({ loading: false });
-            }).catch(err => {
-            });
-    }
-
     onDeleteHandler = (id) => {
-        console.log(id);
+        Axios.delete(this.props.url + id)
+            .then(res => {
+                this.selectTable.fireFetchData();
+            }).catch(err => {
+                console.log(err);
+            });
         // const arrayCopy = this.state.data.filter((row) => row.id !== id);
         // this.setState({ data: arrayCopy });
     }
@@ -60,8 +55,10 @@ class Datatable extends Component {
             sorted: state.sorted,
             filtered: state.filtered
         }).then((res) => {
-            const rows = this.addActionsToRows(res.data.rows, this.state.headers.actions)
+            const headers = prepHeaders(res.data.headers);
+            const rows = this.addActionsToRows(res.data.rows, res.data.headers.actions);
             this.setState({
+                headers: headers,
                 data: rows,
                 pages: res.data.pages,
                 loading: false,
