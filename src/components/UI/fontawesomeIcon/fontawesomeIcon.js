@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './fontawesomeIcon.css';
+import './FontawesomeIcon.css';
 
 const fontawesomeIcon = (props) => (
     <i className={"fa fa-" + props.icon + " " + props.classes}

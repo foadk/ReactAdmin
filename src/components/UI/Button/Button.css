@@ -1,19 +1,24 @@
 .Button {
-    background-color: transparent;
+    /* background-color: transparent; */
     border: none;
-    color: white;
+    /* color: inherit; */
     outline: none;
     cursor: pointer;
     font: inherit;
     padding: 10px;
     margin: 10px;
+    margin-top: 20px;
     font-weight: bold;
 }
 
-.Button:first-of-type {
+.default {
+    color: inherit;
+}
+
+/* .Button:first-of-type {
     margin-left: 0;
     padding-left: 0;
-}
+} */
 
 .Success {
     color: #5C9210;
