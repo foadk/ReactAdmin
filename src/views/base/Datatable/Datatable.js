@@ -7,7 +7,7 @@ import './Datatable.css';
 import { prepHeaders } from '../../../utils/datatable';
 import FontawesomeIcon from '../../../components/UI/FontawesomeIcon/FontawesomeIcon';
 import Modal from '../../../components/UI/Modal/Modal';
-import Dialog from '../../../components/UI/Dialog/Dialog'
+import Dialog from '../../../components/UI/Dialog/Dialog';
 
 class Datatable extends Component {
 
