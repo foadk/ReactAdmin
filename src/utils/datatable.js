@@ -8,7 +8,7 @@ const columnSizes = {
     email: 220
 }
 
-export const prepHeaders = (headerData) => {
+export const prepHeadersWithSections = (headerData) => {
     const headers = [];
     for (const section in headerData) {
         const columns = [];
@@ -30,6 +30,29 @@ export const prepHeaders = (headerData) => {
             Header: headerSectionTitles[section],
             columns: columns
         });
+    }
+    return headers;
+};
+
+export const prepHeaders = (headerData) => {
+    const headers = [];
+    for (const section in headerData) {
+        const columns = [];
+        for (const header in headerData[section]) {
+            const newHeader = { accessor: header }
+            if (section !== 'actions') {
+                newHeader['Header'] = headerData[section][header];
+            } else {
+                newHeader['Header'] = '';
+                newHeader['width'] = 40;
+                newHeader['filterable'] = false;
+            }
+            if(header in columnSizes) {
+                newHeader['width'] = columnSizes[header];
+            }
+            headers.push(newHeader);
+        }
+        // headers.push(columns);
     }
     return headers;
 };

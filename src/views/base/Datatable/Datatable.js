@@ -4,7 +4,7 @@ import "react-table/react-table.css";
 import Axios from '../../../connection/axios';
 
 import './Datatable.css';
-import { prepHeaders } from '../../../utils/datatable';
+import { prepHeaders, prepHeadersWithSections } from '../../../utils/datatable';
 import FontawesomeIcon from '../../../components/UI/FontawesomeIcon/FontawesomeIcon';
 import Modal from '../../../components/UI/Modal/Modal';
 import Dialog from '../../../components/UI/Dialog/Dialog';
@@ -79,6 +79,7 @@ class Datatable extends Component {
             filtered: state.filtered
         }).then((res) => {
             const headers = prepHeaders(res.data.headers);
+            // const headers = prepHeadersWithSections(res.data.headers);
             const rows = this.addActionsToRows(res.data.rows, res.data.headers.actions);
             this.setState({
                 headers: headers,
