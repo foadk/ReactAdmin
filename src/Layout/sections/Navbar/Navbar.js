@@ -24,7 +24,7 @@ class Navbar extends Component {
                         </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src="img/avatars/6.jpg" className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                <img src="/img/avatars/6.jpg" className="img-avatar" alt="admin@bootstrapmaster.com" />
                                 <span className="hidden-md-down">مدیر</span>
                             </a>
                             <div className="dropdown-menu dropdown-menu-right">
