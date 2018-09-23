@@ -5,7 +5,7 @@ import './Dialog.css';
 
 const dialog = (props) => (
     // <div>
-        <div className="card" style={{width: '100%'}} >
+        <div className="no-border" style={{width: '100%'}} >
             <div className="card-header">
                 <div>{props.children}</div>
             </div>
