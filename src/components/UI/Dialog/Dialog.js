@@ -11,6 +11,7 @@ const dialog = (props) => (
             </div>
             {props.buttons.map(button => (
                 <Button
+                    key={button.title}
                     btnType={button.type}
                     clicked={button.click}>
                     {button.title}
