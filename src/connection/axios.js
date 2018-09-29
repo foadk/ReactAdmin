@@ -1,26 +1,32 @@
 import Axios from 'axios';
-import Alert from 'react-s-alert';
+import { alert } from '../utils/alert';
 
 const instance = Axios.create({
     baseURL: 'http://127.0.0.1:8000/'
 });
 
-instance.interceptors.response.use(res => {
-    if('messages' in res.data) {
-        res.data.messages.forEach(message => {
-            Alert[message['type']](message['message'], {
-                position: message['position'] ? message['position'] : 'top-left',
-                effect: 'scale',
-                onShow: function () {
-                    console.log('aye!')
-                },
-                // beep: false,
-                timeout: message['timeout'] ? message['timeout'] : 10000,
-                offset: 100
+instance.interceptors.response.use(
+    result => {
+        if (result.data.hasOwnProperty('messages')) {
+            result.data.messages.forEach(message => {
+                alert(message);
             });
-        });
+        }
+        return result;
+    },
+    error => {
+        if (error.message === 'Request failed with status code 422') {
+            for (let errorKey in error.response.data.errors) {
+                error.response.data.errors[errorKey].forEach(message => {
+                    const alertMessage = {
+                        type: 'error',
+                        message: message
+                    };
+                    alert(alertMessage);
+                });
+            }
+        }
     }
-    return res;
-});
+);
 
 export default instance;
