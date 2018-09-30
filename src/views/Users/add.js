@@ -83,10 +83,10 @@ class addUsers extends Component {
         return (
             <Form
                 fields={this.fields}
-                submitURL="api/users/store"
+                buttons={this.buttons}
                 formTitle="ایجاد کاربر جدید"
                 formId="addUserForm"
-                buttons={this.buttons}
+                submitURL="api/users/store"
             />
         );
     }
