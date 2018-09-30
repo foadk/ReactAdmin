@@ -132,10 +132,8 @@ class Form extends Component {
                                 {this.props.buttons.map(button => (
                                     <Button form={button.form} cols={button.cols}
                                         type={button.type} icon={button.icon}
-                                        classes={button.classes} loading={loading}>{button.text}</Button>
+                                        classes={button.classes} spinning={loading}>{button.text}</Button>
                                 ))}
-                                {/* <Button form={this.props.formId} type="submit" icon="fa fa-dot-circle-o"
-                                    classes="btn-success" loading={loading}> ثبت</Button> */}
                             </div>
                         </div>
                     </div>

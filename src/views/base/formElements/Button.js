@@ -4,7 +4,7 @@ import './Spinner.css';
 
 const button = (props) => {
     let result = null;
-    if (props.loading && props.type === 'submit') {
+    if (props.spinning && props.type === 'submit') {
         result = (
             <div className={"form-group col-md- col-md-" + (props.cols ? props.cols : 12)}>
                 <button
