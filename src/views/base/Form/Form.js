@@ -5,7 +5,6 @@ import FormElement from '../formElements/FormElement';
 import { checkValidity } from '../../../utils/validation';
 import Axios from '../../../connection/axios';
 import withErrorHandler from '../../../hoc/withErrorHandler';
-import './Spinner.css';
 
 class Form extends Component {
 
@@ -38,9 +37,8 @@ class Form extends Component {
     };
 
     onFormSubmit = (event) => {
+
         event.preventDefault();
-        // const formValidation = this.validateForm();
-        // this.touchAll();
 
         let formIsValid = true;
         const fields = JSON.parse(JSON.stringify(this.state.fields));
@@ -56,7 +54,6 @@ class Form extends Component {
         const submitFields = this.getSubmitFields();
         Axios.post(this.props.submitURL, submitFields)
             .then(res => {
-                console.log(res.data);
                 this.resetForm();
                 this.setState({ loading: false });
             }).catch(error => {
@@ -92,55 +89,58 @@ class Form extends Component {
         for (let field in fields) {
             let fieldCols = fields[field].cols ? fields[field].cols : 6;
             cols += fieldCols;
-            if(cols <= 12) {
+            if (cols <= 12) {
                 chunk.push({ id: field, config: this.state.fields[field] });
             }
-            if(cols > 12) {
+            if (cols > 12) {
                 fieldsArray.push(chunk);
                 chunk = [];
                 chunk.push({ id: field, config: this.state.fields[field] });
                 cols = fieldCols;
             }
         }
-        if(cols > 0) fieldsArray.push(chunk);
+        if (cols > 0) fieldsArray.push(chunk);
 
-        const elements = fieldsArray.map(chunk => (
-            <div className="row">
+        const elements = fieldsArray.map((chunk, index) => (
+            <div className="row" key={'chunk-' + index}>
                 {chunk.map(field => (
                     <FormElement
-                    changed={event => this.onChangeHandler(event, field.id)}
-                    key={field.id}
-                    field={field} />
+                        changed={event => this.onChangeHandler(event, field.id)}
+                        key={field.id}
+                        field={field} />
                 ))}
             </div>
         ));
+
+        const { loading } = this.state
 
         return (
             <div className='row'>
                 <div className='col-md-12'>
                     <div className='card'>
                         <div className="card-header">
-                            <strong>ایجاد کاربر جدید</strong>
+                            <strong>{this.props.formTitle}</strong>
                         </div>
                         <div className='card-block'>
-                            <form method="post" onSubmit={this.onFormSubmit} className="form-horizontal" id="mainForm">
-                                {/* <div className="row"> */}
-                                    {elements}
-                                {/* </div> */}
+                            <form method="post" onSubmit={this.onFormSubmit}
+                                className="form-horizontal" id={this.props.formId}>
+                                {elements}
                             </form>
                         </div>
                         <div className="card-footer">
                             <div className="row">
-                                {this.state.loading ?
-                                    <Button classes="btn-success"><div className="lds-dual-ring"></div></Button> :
-                                    <Button form="mainForm" type="submit" icon="fa fa-dot-circle-o" classes="btn-success"> ثبت</Button>
-                                }
+                                {this.props.buttons.map(button => (
+                                    <Button form={button.form} cols={button.cols}
+                                        type={button.type} icon={button.icon}
+                                        classes={button.classes} loading={loading}>{button.text}</Button>
+                                ))}
+                                {/* <Button form={this.props.formId} type="submit" icon="fa fa-dot-circle-o"
+                                    classes="btn-success" loading={loading}> ثبت</Button> */}
                             </div>
                         </div>
                     </div>
                 </div>
                 {/* <button onClick={() => this.setState({ loading: !this.state.loading })} >load</button> */}
-                <button onClick={() => console.log(this.state.fields)} >load</button>
             </div >
         );
     }

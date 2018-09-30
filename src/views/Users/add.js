@@ -69,11 +69,24 @@ class addUsers extends Component {
         },
     };
 
+    buttons = [
+        {
+            type: 'submit',
+            classes: 'btn-success',
+            form: 'addUserForm',
+            icon: 'fa fa-dot-circle-o',
+            text: ' ثبت',
+        }
+    ]
+
     render() {
         return (
             <Form
                 fields={this.fields}
                 submitURL="api/users/store"
+                formTitle="ایجاد کاربر جدید"
+                formId="addUserForm"
+                buttons={this.buttons}
             />
         );
     }
