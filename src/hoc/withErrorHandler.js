@@ -14,9 +14,9 @@ const withErrorHandler = (WrappedComponent, Axios) => {
                 return req
             });
             this.resInterceptor = Axios.interceptors.response.use(res => res, error => {
-                // if (error.message === 'Network Error') {
+                if (error.message === 'Network Error') {
                     this.setState({ error: error })
-                // }
+                }
                 return Promise.reject(error);
             })
         }
