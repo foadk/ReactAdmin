@@ -16,6 +16,7 @@ const input = (props) => (
                 className={"form-control" + (props.classes ? " " + props.classes : "")}
                 placeholder={('placeholder' in props) ? props.placeholder : props.label}
                 onChange={props.changed}
+                style={{ color: 'black', height: '44px' }}
             />
             <span className="help-block">{props.helpText}</span>
         </div>

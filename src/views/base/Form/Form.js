@@ -14,6 +14,7 @@ class Form extends Component {
     }
 
     componentDidMount() {
+        console.log('componentDidMount');
         const fields = JSON.parse(JSON.stringify(this.props.fields));
         for (let field in fields) {
             fields[field].valid = false;
@@ -36,48 +37,42 @@ class Form extends Component {
         this.setState({ fields: newFields });
     };
 
-    onFormSubmit = (event) => {
+    onFormSubmitHandler = (event) => {
 
         event.preventDefault();
 
+        const submitFields = {};
         let formIsValid = true;
         const fields = JSON.parse(JSON.stringify(this.state.fields));
         for (let field in fields) {
             fields[field].valid = checkValidity(fields[field].value, fields[field].validation);
             fields[field].touched = true;
             formIsValid = formIsValid && fields[field].valid;
+            submitFields[field] = fields[field].value;
         }
         this.setState({ fields: fields });
 
-        // if (!formIsValid) return;
+        if (!formIsValid) return;
         this.setState({ loading: true });
-        const submitFields = this.getSubmitFields();
-        Axios.post(this.props.submitURL, submitFields)
+        const submitType = this.props.submitType ? this.props.submitType : 'post';
+        Axios[submitType](this.props.submitURL, submitFields)
             .then(res => {
-                this.resetForm();
                 this.setState({ loading: false });
+                this.resetForm();
             }).catch(error => {
                 this.setState({ loading: false });
             });
     }
 
-    getSubmitFields = () => {
-        const submitFields = {};
-        const fields = JSON.parse(JSON.stringify(this.state.fields));
-        for (let field in fields) {
-            submitFields[field] = fields[field].value;
-        }
-        return submitFields;
-    }
-
     resetForm = () => {
-        const fields = JSON.parse(JSON.stringify(this.state.fields));
-        for (let field in fields) {
-            fields[field].touched = false;
-            fields[field].valid = false;
-            fields[field].value = this.props.fields[field].value;
-        }
-        this.setState({ fields: fields });
+        // const fields = JSON.parse(JSON.stringify(this.state.fields));
+        // for (let field in fields) {
+        //     fields[field].touched = false;
+        //     fields[field].valid = false;
+        //     fields[field].value = this.props.fields[field].value;
+        // }
+        // this.setState({ fields: fields });
+        this.props.reset();
     }
 
     render() {
@@ -122,27 +117,27 @@ class Form extends Component {
                             <strong>{this.props.formTitle}</strong>
                         </div>
                         <div className='card-block'>
-                            <form method="post" onSubmit={this.onFormSubmit}
+                            <form method="post" onSubmit={this.onFormSubmitHandler}
                                 className="form-horizontal" id={this.props.formId}>
                                 {elements}
                             </form>
                         </div>
                         <div className="card-footer">
                             <div className="row">
-                                {this.props.buttons.map(button => (
-                                    <Button form={button.form} cols={button.cols}
-                                        type={button.type} icon={button.icon}
+                                {this.props.buttons.map((button, index) => (
+                                    <Button key={index} form={button.form} cols={button.cols}
+                                        type={button.type} icon={button.icon} click={button.click}
                                         classes={button.classes} spinning={loading}>{button.text}</Button>
                                 ))}
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <button onClick={() => this.setState({ loading: !this.state.loading })} >load</button> */}
+                <button onClick={() => this.props.changeKey()} >load</button>
             </div >
         );
     }
 }
 
-export default withErrorHandler(Form, Axios);
-// export default Form;
+// export default withErrorHandler(Form, Axios);
+export default Form;

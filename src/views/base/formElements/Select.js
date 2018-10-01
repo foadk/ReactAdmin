@@ -17,6 +17,7 @@ const select = (props) => (
                 size={1}
                 onChange={props.changed}
                 // style={{padding: '0.25em 0.75em'}}
+                style={{ color: 'black' }}
             >
                 {props.options.map(option => <option key={option.value} value={option.value}>{option.text}</option>)}
             </select>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Spinner.css';
+import './css/Spinner.css';
 
 const button = (props) => {
     let result = null;
@@ -21,7 +21,8 @@ const button = (props) => {
                     type={props.type}
                     className={"btn " + props.classes}
                     style={{ width: '100%' }}
-                    form={props.form}>
+                    form={props.form}
+                    onClick={props.click ? props.click : null}>
                     {props.icon ? <i className={props.icon} /> : null}
                     {props.children}
                 </button>

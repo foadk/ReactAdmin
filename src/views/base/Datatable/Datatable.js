@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import Axios from '../../../connection/axios';
+import { withRouter } from 'react-router-dom';
 
 import './Datatable.css';
 import { prepHeaders, prepHeadersWithSections } from '../../../utils/datatable';
@@ -22,7 +23,7 @@ class Datatable extends Component {
 
     actionIcons = {
         delete: { icon: 'trash', title: 'حذف', click: (id) => this.deleteIconClickedHandler(id) },
-        edit: { icon: 'edit', title: 'ویرایش', click: () => { } },
+        edit: { icon: 'edit', title: 'ویرایش', click: (id) => this.redirectToEidtPage(id) },
         quick_edit: { icon: 'pencil', title: 'ویرایش سریع', click: () => { } },
     }
 
@@ -31,6 +32,10 @@ class Datatable extends Component {
             deleting: true,
             deletingItemId: id
         });
+    }
+
+    redirectToEidtPage = (id) => {
+        this.props.history.push('/users/edit/' + id);
     }
 
     deleteRow = (id) => {
@@ -53,7 +58,7 @@ class Datatable extends Component {
     }
 
     deleteCanceledHandler = () => {
-        this.setState({deleting: false});
+        this.setState({ deleting: false });
     }
 
     addActionsToRows = (rows, actions) => {
@@ -130,4 +135,4 @@ class Datatable extends Component {
     }
 }
 
-export default Datatable;
+export default withRouter(Datatable);

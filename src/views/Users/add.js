@@ -1,95 +1,36 @@
 import React, { Component } from 'react';
 
 import Form from '../base/Form/Form';
+import { fields } from './fields';
 
-class addUsers extends Component {
+const buttons = [
+    {
+        type: 'submit',
+        classes: 'btn-success',
+        form: 'addUserForm',
+        icon: 'fa fa-dot-circle-o',
+        text: ' ثبت',
+    }
+];
 
-    fields = {
-        name: {
-            elementType: 'text',
-            label: 'نام',
-            value: '',
-            validation: {
-                required: true,
-                minLength: 2
-            },
-        },
-        last_name: {
-            elementType: 'text',
-            label: 'نام خانوادگی',
-            value: '',
-            validation: {
-                required: true,
-                minLength: 2
-            },
-        },
-        email: {
-            elementType: 'email',
-            label: 'ایمیل',
-            value: '',
-            validation: {
-                required: true,
-                isEmail: true
-            },
-        },
-        password: {
-            elementType: 'password',
-            label: 'رمز عبور',
-            value: '',
-            validation: {
-                required: true,
-                minLength: 3,
-            },
-        },
-        sex: {
-            elementType: 'select',
-            label: 'جنسیت',
-            value: 'male',
-            options: [
-                { value: 'male', text: 'آقا' },
-                { value: 'female', text: 'خانم' }
-            ],
-            validation: {
-                required: true
-            },
-        },
-        national_id: {
-            elementType: 'text',
-            label: 'کد ملی',
-            value: '',
-            validation: {},
-        },
-        mobile: {
-            elementType: 'text',
-            label: 'تلفن',
-            value: '',
-            validation: {
-                required: true
-            },
-        },
-    };
+class AddUsers extends Component {
 
-    buttons = [
-        {
-            type: 'submit',
-            classes: 'btn-success',
-            form: 'addUserForm',
-            icon: 'fa fa-dot-circle-o',
-            text: ' ثبت',
-        }
-    ]
+    reset = () => {
+        this.forceUpdate();
+    }
 
     render() {
         return (
             <Form
-                fields={this.fields}
-                buttons={this.buttons}
+                fields={fields}
+                buttons={buttons}
                 formTitle="ایجاد کاربر جدید"
                 formId="addUserForm"
-                submitURL="api/users/store"
+                submitURL="api/users"
+                reset={this.reset}
             />
         );
     }
 }
 
-export default addUsers;
+export default AddUsers;
