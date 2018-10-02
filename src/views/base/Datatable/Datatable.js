@@ -13,6 +13,7 @@ import Dialog from '../../../components/UI/Dialog/Dialog';
 class Datatable extends Component {
 
     state = {
+        table: null,
         headers: [],
         data: [],
         pages: -1,
@@ -67,7 +68,7 @@ class Datatable extends Component {
                 row[action] = <FontawesomeIcon
                     icon={this.actionIcons[action].icon}
                     title={this.actionIcons[action].title}
-                    iconClicked={() => this.actionIcons[action].click(row['id'])}
+                    iconClicked={() => this.actionIcons[action].click(row[this.state.table + '.id'])}
                     classes="pointer" />;
             }
             return row;
@@ -87,6 +88,7 @@ class Datatable extends Component {
             // const headers = prepHeadersWithSections(res.data.headers);
             const rows = this.addActionsToRows(res.data.rows, res.data.headers.actions);
             this.setState({
+                table: res.data.table,
                 headers: headers,
                 data: rows,
                 pages: res.data.pages,

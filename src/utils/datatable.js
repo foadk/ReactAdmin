@@ -39,7 +39,7 @@ export const prepHeaders = (headerData) => {
     for (const section in headerData) {
         const columns = [];
         for (const header in headerData[section]) {
-            const newHeader = { accessor: header }
+            const newHeader = {id: header, accessor: d=> d[header] }
             if (section !== 'actions') {
                 newHeader['Header'] = headerData[section][header];
             } else {
