@@ -31,6 +31,18 @@ export default {
       ]
     },
     {
+      name: 'اخبار',
+      url: '/news',
+      // icon:'icon-people',
+      children: [
+        {
+          name: 'مشاهده اخبار',
+          url: '/news',
+          icon: 'icon-eye'
+        },
+      ]
+    },
+    {
       title: true,
       name: 'تم',
       wrapper: {            // optional wrapper object
