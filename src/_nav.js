@@ -40,6 +40,11 @@ export default {
           url: '/news',
           icon: 'icon-eye'
         },
+        {
+          name: 'افزودن خبر',
+          url: '/news/add',
+          icon: 'icon-plus'
+        }
       ]
     },
     {

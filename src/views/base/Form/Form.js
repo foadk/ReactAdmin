@@ -28,7 +28,7 @@ class Form extends Component {
         const newFields = { ...this.state.fields };
         const newField = { ...newFields[fieldId] };
 
-        newField.value = event.target.value;
+        newField.value = newField.elementType === 'checkbox' ? event.target.checked : event.target.value;
         newField.valid = checkValidity(newField.value, newField.validation);
         newField.touched = true;
 
@@ -65,13 +65,6 @@ class Form extends Component {
     }
 
     resetForm = () => {
-        // const fields = JSON.parse(JSON.stringify(this.state.fields));
-        // for (let field in fields) {
-        //     fields[field].touched = false;
-        //     fields[field].valid = false;
-        //     fields[field].value = this.props.fields[field].value;
-        // }
-        // this.setState({ fields: fields });
         this.props.reset();
     }
 
@@ -82,7 +75,9 @@ class Form extends Component {
         let cols = 0;
         const fields = JSON.parse(JSON.stringify(this.state.fields));
         for (let field in fields) {
-            let fieldCols = fields[field].cols ? fields[field].cols : 6;
+            let fieldCols = 6;
+            if(fields[field].elementType == 'textEditor') fieldCols = 12;
+            if(fields[field].cols) fieldCols = fields[field].cols;
             cols += fieldCols;
             if (cols <= 12) {
                 chunk.push({ id: field, config: this.state.fields[field] });

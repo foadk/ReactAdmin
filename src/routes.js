@@ -6,7 +6,7 @@ const AddUsers = asyncComponent(() => import('./views/Users/add'));
 const EditUsers = asyncComponent(() => import('./views/Users/edit'));
 
 const News = asyncComponent(() => import('./views/News'));
-// const AddNews = asyncComponent(() => import('./views/News/add'));
+const AddNews = asyncComponent(() => import('./views/News/add'));
 // const EditNews = asyncComponent(() => import('./views/News/edit'));
 
 const routes = [
@@ -16,7 +16,7 @@ const routes = [
     {name: 'EditUsers', path: '/users/edit/:id', component: EditUsers},
 
     {name: 'News', path: '/news', exact: true, component: News},
-    // {name: 'AddNews', path: '/news/add', component: AddNews},
+    {name: 'AddNews', path: '/news/add', component: AddNews},
     // {name: 'EditNews', path: '/news/edit/:id', component: EditNews},
 ];
 

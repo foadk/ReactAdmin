@@ -1,64 +1,45 @@
 export const fields = {
-    name: {
+    title: {
         elementType: 'text',
-        label: 'نام',
+        label: 'عنوان',
         value: '',
         validation: {
             required: true,
             minLength: 2
         },
     },
-    last_name: {
-        elementType: 'text',
-        label: 'نام خانوادگی',
-        value: '',
-        validation: {
-            required: true,
-            minLength: 2
-        },
-    },
-    email: {
-        elementType: 'email',
-        label: 'ایمیل',
-        value: '',
-        validation: {
-            required: true,
-            isEmail: true
-        },
-    },
-    password: {
-        elementType: 'password',
-        label: 'رمز عبور',
-        value: '',
-        validation: {
-            required: true,
-            minLength: 3,
-        },
-    },
-    sex: {
+    news_cat_id: {
         elementType: 'select',
-        label: 'جنسیت',
-        value: 'male',
-        options: [
-            { value: 'male', text: 'آقا' },
-            { value: 'female', text: 'خانم' }
-        ],
+        label: 'گروه',
+        value: '',
+        options: [],
         validation: {
             required: true
         },
     },
-    national_id: {
-        elementType: 'text',
-        label: 'کد ملی',
+    description: {
+        elementType: 'textArea',
+        label: 'توضیحات',
+        value: '',
+        validation: {},
+        cols: 12,
+    },
+    content: {
+        elementType: 'textEditor',
+        label: 'متن',
         value: '',
         validation: {},
     },
-    mobile: {
-        elementType: 'text',
-        label: 'تلفن',
+    position: {
+        elementType: 'number',
+        label: 'موقعیت',
         value: '',
-        validation: {
-            required: true
-        },
+        validation: {},
+    },
+    display: {
+        elementType: 'checkbox',
+        label: 'مشاهده',
+        value: false,
+        validation: {},
     },
 };
