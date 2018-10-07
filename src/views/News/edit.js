@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import Axios from '../../connection/axios';
 
 import Form from '../base/Form/Form';
-import { fields as editFields } from './fields';
+import { fields as formFields } from './fields';
 
-editFields.password.validation = {};
-
-class EditUsers extends Component {
+class EditNews extends Component {
 
     state = {
         fields: {},
@@ -17,22 +15,38 @@ class EditUsers extends Component {
 
     componentDidMount() {
         const axiosPromise = this.getFormData();
-        axiosPromise.then(({ data }) => {
-            const fields = this.makeData(data);
+        axiosPromise.then(fields => {
             this.setState({ fields: fields, loading: false });
         });
     }
 
     getFormData = () => {
-        const axiosPromise = Axios.get('api/users/' + this.props.match.params.id + '/edit');
+        const axiosPromise = Axios.get('api/news/' + this.props.match.params.id + '/edit')
+            .then(({ data }) => {
+                const cats = this._prepareCats(data.cats);
+                formFields.news_cat_id.options = cats;
+                return this.makeData(data.fields);
+            });
         axiosPromise.catch(error => {
-            console.log('here comes errror', error);
+            console.log(error);
         });
         return axiosPromise;
     }
 
+    _prepareCats = cats => {
+        cats.map(item => {
+            item.value = item.id;
+            item.text = item.title;
+            delete item.id;
+            delete item.title;
+            return item;
+        })
+        cats.unshift({value: '', text: 'انتخاب کنید'});
+        return cats;
+    };
+
     makeData = (data) => {
-        const fields = JSON.parse(JSON.stringify(editFields));
+        const fields = JSON.parse(JSON.stringify(formFields));
         for (let field in fields) {
             fields[field].value = data[field] ? data[field] : '';
         }
@@ -41,8 +55,7 @@ class EditUsers extends Component {
 
     reset = () => {
         const axiosPromise = this.getFormData();
-        axiosPromise.then(({ data }) => {
-            const fields = this.makeData(data);
+        axiosPromise.then(fields => {
             this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
         });
     }
@@ -51,7 +64,7 @@ class EditUsers extends Component {
         {
             type: 'submit',
             classes: 'btn-success',
-            form: 'editUserForm',
+            form: 'editNewsForm',
             icon: 'fa fa-dot-circle-o',
             text: ' ثبت',
             cols: 6,
@@ -73,8 +86,8 @@ class EditUsers extends Component {
                     fields={this.state.fields}
                     buttons={this.buttons}
                     formTitle="ویرایش کاربر"
-                    formId="editUserForm"
-                    submitURL={"api/users/" + this.props.match.params.id}
+                    formId="editNewsForm"
+                    submitURL={"api/news/" + this.props.match.params.id}
                     submitType="put"
                     reset={this.reset}
                     key={this.state.key}
@@ -85,4 +98,4 @@ class EditUsers extends Component {
     }
 }
 
-export default EditUsers;
+export default EditNews;

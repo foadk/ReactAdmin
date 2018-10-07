@@ -14,7 +14,6 @@ class Form extends Component {
     }
 
     componentDidMount() {
-        console.log('componentDidMount');
         const fields = JSON.parse(JSON.stringify(this.props.fields));
         for (let field in fields) {
             fields[field].valid = false;
@@ -73,6 +72,7 @@ class Form extends Component {
         const fieldsArray = [];
         let chunk = [];
         let cols = 0;
+        // console.log(this.state.fields);
         const fields = JSON.parse(JSON.stringify(this.state.fields));
         for (let field in fields) {
             let fieldCols = 6;
