@@ -2,6 +2,9 @@ import React from 'react';
 
 import Input from './Input';
 import Select from './Select';
+import TextEditor from './TextEditor';
+import TextArea from './TextArea';
+import CheckBox from './CheckBox';
 
 const formElement = (props) => {
     let element = null;
@@ -17,6 +20,24 @@ const formElement = (props) => {
             break;
         case 'select':
             element = <Select
+                {...props.field.config}
+                id={props.field.id}
+                changed={props.changed} />;
+            break;
+        case 'textEditor':
+            element = <TextEditor
+                {...props.field.config}
+                id={props.field.id}
+                changed={props.changed} />;
+            break;
+        case 'textArea':
+            element = <TextArea
+                {...props.field.config}
+                id={props.field.id}
+                changed={props.changed} />;
+            break;
+        case 'checkbox':
+            element = <CheckBox
                 {...props.field.config}
                 id={props.field.id}
                 changed={props.changed} />;
