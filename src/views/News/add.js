@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Form from '../base/Form/Form';
 import Axios from '../../connection/axios';
-import { makeTree } from '../../utils/utils';
 import { fields as formFields } from './fields';
 
 const buttons = [
