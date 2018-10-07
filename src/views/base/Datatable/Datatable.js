@@ -36,7 +36,7 @@ class Datatable extends Component {
     }
 
     redirectToEidtPage = (id) => {
-        this.props.history.push('/users/edit/' + id);
+        this.props.history.push('/' + this.state.table + '/edit/' + id);
     }
 
     deleteRow = (id) => {
