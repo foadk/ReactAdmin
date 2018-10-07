@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Axios from '../../connection/axios';
 
 import Form from '../base/Form/Form';
+import Axios from '../../connection/axios';
 import { fields as editFields } from './fields';
 
 editFields.password.validation = {};
@@ -17,16 +17,18 @@ class EditUsers extends Component {
 
     componentDidMount() {
         const axiosPromise = this.getFormData();
-        axiosPromise.then(({ data }) => {
-            const fields = this.makeData(data);
+        axiosPromise.then(fields => {
             this.setState({ fields: fields, loading: false });
         });
     }
 
     getFormData = () => {
-        const axiosPromise = Axios.get('api/users/' + this.props.match.params.id + '/edit');
+        const axiosPromise = Axios.get('api/users/' + this.props.match.params.id + '/edit')
+            .then(({ data }) => {
+                return this.makeData(data);
+            });
         axiosPromise.catch(error => {
-            console.log('here comes errror', error);
+            console.log(error);
         });
         return axiosPromise;
     }
@@ -41,8 +43,7 @@ class EditUsers extends Component {
 
     reset = () => {
         const axiosPromise = this.getFormData();
-        axiosPromise.then(({ data }) => {
-            const fields = this.makeData(data);
+        axiosPromise.then(fields => {
             this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
         });
     }
