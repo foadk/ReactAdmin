@@ -42,7 +42,7 @@ class TextEditor extends Component {
     render() {
         const { editorState } = this.state;
         return (
-            <div className={"col-md- col-md-" + (this.props.cols ? this.props.cols : 12)}>
+            <div className={"col-md-" + (this.props.cols ? this.props.cols : 12)}>
                 <div className="form-group">
                     <label
                         className={"form-form-control-label" + (this.props.labelClasses ? " " + this.props.labelClasses : "")}

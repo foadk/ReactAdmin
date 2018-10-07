@@ -2,7 +2,7 @@ import React from 'react';
 import withValidation from './withValidation';
 
 const input = (props) => (
-    <div className={"col-md- col-md-" + (props.cols ? props.cols : 6)}>
+    <div className={"col-md-" + (props.cols ? props.cols : 6)}>
         <div className={"form-group" + props.validationClass}>
             <label
                 className={"form-form-control-label" + (props.labelClasses ? " " + props.labelClasses : "")}

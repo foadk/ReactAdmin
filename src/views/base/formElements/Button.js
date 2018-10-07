@@ -6,7 +6,7 @@ const button = (props) => {
     let result = null;
     if (props.spinning && props.type === 'submit') {
         result = (
-            <div className={"form-group col-md- col-md-" + (props.cols ? props.cols : 12)}>
+            <div className={"form-group col-md-" + (props.cols ? props.cols : 12)}>
                 <button
                     className={"btn " + props.classes}
                     style={{ width: '100%' }}>
