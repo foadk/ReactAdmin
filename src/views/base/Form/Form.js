@@ -51,7 +51,7 @@ class Form extends Component {
         }
         this.setState({ fields: fields });
 
-        if (!formIsValid) return;
+        // if (!formIsValid) return;
         this.setState({ loading: true });
         const submitType = this.props.submitType ? this.props.submitType : 'post';
         Axios[submitType](this.props.submitURL, submitFields)
