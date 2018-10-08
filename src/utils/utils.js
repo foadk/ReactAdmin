@@ -45,3 +45,10 @@ const _removeItemFromArray = (item, array) => {
     const index = array.findIndex(element => element.key === item.key);
     array.splice(index, 1);
 }
+
+export const updateObject = (state, newState) => {
+    return {
+        ...state,
+        ...newState
+    }
+}

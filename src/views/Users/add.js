@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Form from '../base/Form/Form';
 import { fields } from './fields';
+import withBreadcrumb from '../../hoc/withBreadcrumb';
 
 const buttons = [
     {
@@ -14,6 +15,11 @@ const buttons = [
 ];
 
 class AddUsers extends Component {
+
+    breadcrumb = [
+        {text: 'کاربران', url: '/users'},
+        {text: 'افزودن کاربر', url: '', active: true}
+    ];
 
     reset = () => {
         this.forceUpdate();
@@ -33,4 +39,4 @@ class AddUsers extends Component {
     }
 }
 
-export default AddUsers;
+export default withBreadcrumb(AddUsers);
