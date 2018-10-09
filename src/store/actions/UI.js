@@ -12,3 +12,16 @@ export const clearBreadcrumb = items => {
         type: actionTypes.CLEAR_BREADCRUMB
     }
 }
+
+export const setActiveSidebarItem = items => {
+    return {
+        type: actionTypes.SET_ACTIVE_SIDEBAR_ITEM,
+        activeItem: items
+    }
+}
+
+export const clearActiveSidebarItem = items => {
+    return {
+        type: actionTypes.CLEAR_ACTIVE_SIDEBAR_ITEM
+    }
+}

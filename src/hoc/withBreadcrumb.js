@@ -1,26 +1,24 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../store/actions/';
 
-const withBreadcrumb = WrappedComponent => {
+const withBreadcrumb = (WrappedComponent, breadcrumb) => {
     class Wrapper extends Component {
 
-        wrapped = React.createRef();
-
         componentDidMount() {
-            this.props.setBreadcrumb(this.wrapped.current.breadcrumb);
+            this.props.setBreadcrumb(breadcrumb);
         }
-    
+
         componentWillUnmount() {
             this.props.clearBreadcrumb();
         }
 
         render() {
-            return <WrappedComponent ref={this.wrapped} {...this.props} />
+            return <WrappedComponent {...this.props} />
         }
     }
-    
+
     return connect(null, mapDispatchToProps)(Wrapper);
 }
 

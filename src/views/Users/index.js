@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import Datatable from '../base/Datatable/Datatable';
 
 import withBreadcrumb from '../../hoc/withBreadcrumb';
+import withActiveSidebarItem from '../../hoc/withActiveSidebarItem';
+
+const breadcrumb = [{ text: 'کاربران', url: '', active: true }];
+const activeSidebarItem = 'مشاهده کاربران';
 
 class Users extends Component {
-
-    breadcrumb = [{text: 'کاربران', url: '', active: true}];
 
     render() {
         return (
@@ -23,4 +25,4 @@ class Users extends Component {
     }
 }
 
-export default withBreadcrumb(Users);
+export default withActiveSidebarItem(withBreadcrumb(Users, breadcrumb), activeSidebarItem);

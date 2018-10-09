@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Form from '../base/Form/Form';
 import { fields } from './fields';
 import withBreadcrumb from '../../hoc/withBreadcrumb';
+import withActiveSidebarItem from '../../hoc/withActiveSidebarItem';
 
 const buttons = [
     {
@@ -14,12 +15,13 @@ const buttons = [
     }
 ];
 
-class AddUsers extends Component {
+const breadcrumb = [
+    {text: 'کاربران', url: '/users'},
+    {text: 'افزودن کاربر', url: '', active: true}
+];
+const activeSidebarItem = 'افزودن کاربر';
 
-    breadcrumb = [
-        {text: 'کاربران', url: '/users'},
-        {text: 'افزودن کاربر', url: '', active: true}
-    ];
+class AddUsers extends Component {
 
     reset = () => {
         this.forceUpdate();
@@ -39,4 +41,4 @@ class AddUsers extends Component {
     }
 }
 
-export default withBreadcrumb(AddUsers);
+export default withActiveSidebarItem(withBreadcrumb(AddUsers, breadcrumb), activeSidebarItem);

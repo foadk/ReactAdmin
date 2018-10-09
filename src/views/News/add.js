@@ -4,6 +4,7 @@ import Form from '../base/Form/Form';
 import Axios from '../../connection/axios';
 import { fields as formFields } from './fields';
 import withBreadcrumb from '../../hoc/withBreadcrumb';
+import withActiveSidebarItem from '../../hoc/withActiveSidebarItem';
 
 const buttons = [
     {
@@ -15,6 +16,13 @@ const buttons = [
     }
 ];
 
+const breadcrumb = [
+    {text: 'اخبار', url: '/news'},
+    {text: 'افزودن خبر', url: '', active: true}
+];
+
+const activeSidebarItem = 'افزودن خبر';
+
 class AddNews extends Component {
 
     state = {
@@ -23,11 +31,6 @@ class AddNews extends Component {
         test: 'test',
         key: 1,
     };
-
-    breadcrumb = [
-        {text: 'اخبار', url: '/news'},
-        {text: 'افزودن خبر', url: '', active: true}
-    ];
 
     componentDidMount() {
         const axiosPromise = this.getFormData();
@@ -88,4 +91,4 @@ class AddNews extends Component {
     }
 }
 
-export default withBreadcrumb(AddNews);
+export default withActiveSidebarItem(withBreadcrumb(AddNews, breadcrumb), activeSidebarItem);

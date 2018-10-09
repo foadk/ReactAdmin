@@ -7,6 +7,11 @@ import withBreadcrumb from '../../hoc/withBreadcrumb';
 
 editFields.password.validation = {};
 
+const breadcrumb = [
+    {text: 'کاربران', url: '/users'},
+    {text: 'ویرایش کاربر', url: '', active: true}
+];
+
 class EditUsers extends Component {
 
     state = {
@@ -15,11 +20,6 @@ class EditUsers extends Component {
         test: 'test',
         key: 1,
     };
-
-    breadcrumb = [
-        {text: 'کاربران', url: '/users'},
-        {text: 'ویرایش کاربر', url: '', active: true}
-    ];
 
     componentDidMount() {
         const axiosPromise = this.getFormData();
@@ -92,4 +92,4 @@ class EditUsers extends Component {
     }
 }
 
-export default withBreadcrumb(EditUsers);
+export default withBreadcrumb(EditUsers, breadcrumb);

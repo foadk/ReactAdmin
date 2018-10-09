@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import navigationItems from '../../../_nav';
 
@@ -39,10 +40,11 @@ class Sidebar extends Component {
                 let res = (
                     <li key={item.name} className={"nav-item" +
                         (item.hasOwnProperty('children') ? " nav-dropdown" : "") +
-                        (this.state.openMenus.includes(item.name) ? (" open") : '')}>
+                        (this.state.openMenus.includes(item.name) ? " open" : "")}>
                         <Link className={"nav-link" +
                             (item.hasOwnProperty('children') ? " nav-dropdown-toggle" : "") +
-                            (item.hasOwnProperty('variant') ? " nav-link-" + item.variant : "")}
+                            (item.hasOwnProperty('variant') ? " nav-link-" + item.variant : "") +
+                            (this.props.activeItem === item.name ? " active" : "")}
                             id={item.name}
                             onClick={() => this.itemClickHandler(item)}
                             to={!item.hasOwnProperty('children') ? item.url : "#"}>
@@ -79,4 +81,10 @@ class Sidebar extends Component {
     }
 }
 
-export default Sidebar;
+const mapStateToProps = state => {
+    return {
+        activeItem: state.UI.activeSidebarItem
+    }
+}
+
+export default connect(mapStateToProps)(Sidebar);
