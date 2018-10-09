@@ -3,6 +3,7 @@ import Axios from '../../connection/axios';
 
 import Form from '../base/Form/Form';
 import { fields as formFields } from './fields';
+import withBreadcrumb from '../../hoc/withBreadcrumb';
 
 class EditNews extends Component {
 
@@ -12,6 +13,11 @@ class EditNews extends Component {
         test: 'test',
         key: 1,
     };
+
+    breadcrumb = [
+        {text: 'اخبار', url: '/news'},
+        {text: 'ویرایش خبر', url: '', active: true}
+    ];
 
     componentDidMount() {
         const axiosPromise = this.getFormData();
@@ -98,4 +104,4 @@ class EditNews extends Component {
     }
 }
 
-export default EditNews;
+export default withBreadcrumb(EditNews);

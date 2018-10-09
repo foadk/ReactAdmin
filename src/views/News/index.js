@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import Datatable from '../base/Datatable/Datatable';
+import withBreadcrumb from '../../hoc/withBreadcrumb';
 
 class Users extends Component {
+
+    breadcrumb = [{text: 'اخبار', url: '', active: true}];
+
     render() {
         return (
             <div className='row'>
@@ -18,4 +22,4 @@ class Users extends Component {
     }
 }
 
-export default Users;
+export default withBreadcrumb(Users);

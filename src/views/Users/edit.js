@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Form from '../base/Form/Form';
 import Axios from '../../connection/axios';
 import { fields as editFields } from './fields';
+import withBreadcrumb from '../../hoc/withBreadcrumb';
 
 editFields.password.validation = {};
 
@@ -14,6 +15,11 @@ class EditUsers extends Component {
         test: 'test',
         key: 1,
     };
+
+    breadcrumb = [
+        {text: 'کاربران', url: '/users'},
+        {text: 'ویرایش کاربر', url: '', active: true}
+    ];
 
     componentDidMount() {
         const axiosPromise = this.getFormData();
@@ -86,4 +92,4 @@ class EditUsers extends Component {
     }
 }
 
-export default EditUsers;
+export default withBreadcrumb(EditUsers);
