@@ -17,8 +17,8 @@ const buttons = [
 ];
 
 const breadcrumb = [
-    {text: 'اخبار', url: '/news'},
-    {text: 'افزودن خبر', url: '', active: true}
+    { text: 'اخبار', url: '/news' },
+    { text: 'افزودن خبر', url: '', active: true }
 ];
 
 const activeSidebarItem = 'افزودن خبر';
@@ -61,7 +61,7 @@ class AddNews extends Component {
             delete item.title;
             return item;
         })
-        cats.unshift({value: '', text: 'انتخاب کنید'});
+        cats.unshift({ value: '', text: 'انتخاب کنید' });
         return cats;
     };
 
@@ -91,4 +91,7 @@ class AddNews extends Component {
     }
 }
 
-export default withActiveSidebarItem(withBreadcrumb(AddNews, breadcrumb), activeSidebarItem);
+export default withActiveSidebarItem(
+    withBreadcrumb(AddNews, breadcrumb),
+    activeSidebarItem
+);
