@@ -67,6 +67,9 @@ export const setStatus = status => {
 }
 
 export const authLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('expiresIn');
     return {
         type: actionTypes.AUTH_LOGOUT
     }
