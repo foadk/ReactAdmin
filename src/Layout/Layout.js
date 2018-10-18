@@ -14,7 +14,7 @@ class Layout extends Component {
                 <Main />
                 <Footer />
             </React.Fragment>
-        )
+        );
     }
 }
 

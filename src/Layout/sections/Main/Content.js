@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import routes from '../../../routes';
 
@@ -17,6 +17,7 @@ class Content extends Component {
                 <div className="animated fadeIn">
                     <Switch>
                         {generatedRoutes}
+                        <Redirect to="/" />
                     </Switch>
                 </div>
             </div>

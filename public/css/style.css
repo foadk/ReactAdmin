@@ -633,7 +633,7 @@ pre {
   max-height: 340px;
   overflow-y: scroll; }
 
-.container {
+/* .container {
   margin-right: auto;
   margin-left: auto;
   padding-right: 15px;
@@ -653,7 +653,7 @@ pre {
       max-width: 940px; } }
   @media (min-width: 1200px) {
     .container {
-      max-width: 100%; } }
+      max-width: 100%; } } */
 
 .container-fluid {
   margin-right: auto;
