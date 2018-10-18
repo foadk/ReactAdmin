@@ -6,7 +6,7 @@ const initialState = {
     refreshToken: null,
     expirationDate: null,
     isAuthenticated: false,
-    status: 'loading' // loading, authenticated, notAuthenticated
+    status: 'loading', // loading, authenticated, notAuthenticated
 };
 
 const setToken = (state, action) => {
