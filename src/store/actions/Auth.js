@@ -28,10 +28,10 @@ export const refreshAccessToken = (clientId, clientSecret, refreshToken) => disp
 
 export const authSuccess = (accessToken, refreshToken, expiresIn) => dispatch => {
     console.log('authsuccess');
-    const expirationDate = new Date((new Date).getTime() + expiresIn * 1000)
+    const expirationDate = new Date((new Date).getTime() + expiresIn * 1000);
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
-    localStorage.setItem('expiresIn', expirationDate);
+    localStorage.setItem('expirationDate', expirationDate);
     dispatch(setToken(accessToken, refreshToken, expirationDate));
 };
 
@@ -48,13 +48,23 @@ export const checkAuthState = (accessToken, refreshToken, expirationDate) => dis
     dispatch(setStatus('loading'));
     if (!accessToken) {
         if (localStorage.getItem('accessToken')) {
-            dispatch(setToken(
-                localStorage.getItem('accessToken'),
-                localStorage.getItem('refreshToken'),
-                localStorage.getItem('expirationDate')
-            ));
+            if (new Date(localStorage.getItem('expirationDate')) > (new Date())) {
+                dispatch(setToken(
+                    localStorage.getItem('accessToken'),
+                    localStorage.getItem('refreshToken'),
+                    localStorage.getItem('expirationDate')
+                ));
+            } else {
+                dispatch(authLogout());
+            }
         } else {
             dispatch(setStatus('notAuthenticated'));
+        }
+    } else {
+        if (expirationDate > (new Date())) {
+            dispatch(setStatus('authenticated'));
+        } else {
+            dispatch(authLogout);
         }
     }
 }
