@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import Axios from '../../../connection/axios';
+// import Axios from '../../../connection/axios';
+// import Axios from '../../../connection/axiosWithTokenHeader';
 import { withRouter } from 'react-router-dom';
 
 import './Datatable.css';
@@ -9,6 +10,8 @@ import { prepHeaders, prepHeadersWithSections } from '../../../utils/datatable';
 import FontawesomeIcon from '../../../components/UI/FontawesomeIcon/FontawesomeIcon';
 import Modal from '../../../components/UI/Modal/Modal';
 import Dialog from '../../../components/UI/Dialog/Dialog';
+// import withErrorHandler from '../../../hoc/withErrorHandler';
+import withResourceProvider from '../../../hoc/withResourceProvider';
 
 class Datatable extends Component {
 
@@ -19,48 +22,67 @@ class Datatable extends Component {
         pages: -1,
         loading: true,
         deleting: false,
-        deletingItemId: null
+        deletingItemId: null,
+        error: null
+    };
+
+    componentDidUpdate() {
+        const response = this.props.datatable;
+        if (response) {
+            this.props.deleteResponse('datatable');
+            if ('datatableData' === response.title) {
+                const data = response.data;
+                const headers = prepHeaders(data.headers);
+                // const headers = prepHeadersWithSections(res.data.headers);
+                const rows = this.addActionsToRows(data.rows, data.headers.actions);
+                this.setState({
+                    table: data.table,
+                    headers: headers,
+                    data: rows,
+                    pages: data.pages,
+                    loading: false,
+                });
+            }
+            if ('delete' === response.title) {
+                this.selectTable.fireFetchData();
+                this.setState({
+                    deleting: false,
+                    deletingItemId: null
+                });
+            }
+        }
     }
 
     actionIcons = {
         delete: { icon: 'trash', title: 'حذف', click: (id) => this.deleteIconClickedHandler(id) },
         edit: { icon: 'edit', title: 'ویرایش', click: (id) => this.redirectToEidtPage(id) },
         quick_edit: { icon: 'pencil', title: 'ویرایش سریع', click: () => { } },
-    }
+    };
+
+    redirectToEidtPage = (id) => {
+        this.props.history.push('/' + this.state.table + '/edit/' + id);
+    };
 
     deleteIconClickedHandler = (id) => {
         this.setState({
             deleting: true,
             deletingItemId: id
         });
-    }
-
-    redirectToEidtPage = (id) => {
-        this.props.history.push('/' + this.state.table + '/edit/' + id);
-    }
+    };
 
     deleteRow = (id) => {
-        Axios.delete(this.props.url + id)
-            .then(res => {
-                this.selectTable.fireFetchData();
-                this.setState({
-                    deleting: false,
-                    deletingItemId: null
-                });
-            }).catch(err => {
-                console.log(err);
-                this.setState({
-                    deleting: false,
-                    deletingItemId: null
-                });
-            });
-        // const arrayCopy = this.state.data.filter((row) => row.id !== id);
-        // this.setState({ data: arrayCopy });
-    }
+
+        const request = {
+            method: 'delete',
+            url: this.props.url + id,
+        };
+
+        this.props.prepareRequest(request, 'datatable', 'delete');
+    };
 
     deleteCanceledHandler = () => {
         this.setState({ deleting: false });
-    }
+    };
 
     addActionsToRows = (rows, actions) => {
         const newRows = rows.map(row => {
@@ -74,29 +96,23 @@ class Datatable extends Component {
             return row;
         });
         return newRows;
-    }
+    };
 
     fetchData = (state, instance) => {
         this.setState({ loading: true });
-        Axios.post(this.props.url + 'datatable', {
-            page: state.page,
-            pageSize: state.pageSize,
-            sorted: state.sorted,
-            filtered: state.filtered
-        }).then((res) => {
-            const headers = prepHeaders(res.data.headers);
-            // const headers = prepHeadersWithSections(res.data.headers);
-            const rows = this.addActionsToRows(res.data.rows, res.data.headers.actions);
-            this.setState({
-                table: res.data.table,
-                headers: headers,
-                data: rows,
-                pages: res.data.pages,
-                loading: false,
-            });
-        }).catch(err => {
-            console.log(err);
-        });
+
+        const request = {
+            method: 'post',
+            url: this.props.url + 'datatable',
+            data: {
+                page: state.page,
+                pageSize: state.pageSize,
+                sorted: state.sorted,
+                filtered: state.filtered
+            }
+        };
+
+        this.props.prepareRequest(request, 'datatable', 'datatableData');
     };
 
     render() {
@@ -137,4 +153,4 @@ class Datatable extends Component {
     }
 }
 
-export default withRouter(Datatable);
+export default withRouter(withResourceProvider(Datatable, 'datatable'));

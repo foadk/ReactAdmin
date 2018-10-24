@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import routes from '../../../routes';
 
@@ -15,14 +16,21 @@ class Content extends Component {
         return (
             <div className="container-fluid">
                 <div className="animated fadeIn">
-                    <Switch>
-                        {generatedRoutes}
-                        <Redirect to="/" />
-                    </Switch>
+                    {'authenticated' === this.props.authStatus ? (
+                        <Switch>
+                            {generatedRoutes}
+                        </Switch>
+                    ) : null}
                 </div>
             </div>
         );
     }
 }
 
-export default Content;
+const mapStateToProps = state => {
+    return {
+        authStatus: state.Auth.status
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(Content));

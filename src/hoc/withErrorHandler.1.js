@@ -1,40 +1,34 @@
 import React, { Component, Fragment } from 'react';
 import Modal from '../components/UI/Modal/Modal';
-import { connect } from 'react-redux';
-
-import * as actions from '../store/actions';
 
 const withErrorHandler = (WrappedComponent, Axios) => {
-    class Wrapper extends Component {
+    return class extends Component {
 
         state = {
             error: null
-        };
+        }
 
         componentWillMount() {
             this.reqInterceptor = Axios.interceptors.request.use(req => {
-                this.setState({ error: null });
-                return req;
+                this.setState({ error: null })
+                return req
             });
             this.resInterceptor = Axios.interceptors.response.use(res => res, error => {
                 if (error.message === 'Network Error') {
-                    this.setState({ error: error });
-                };
-                // if (error.response && error.response.status === 401) {
-                //     this.props.refreshAccessToken();
-                // }
+                    this.setState({ error: error })
+                }
                 return Promise.reject(error);
-            });
+            })
         }
 
         componentWillUnmount() {
-            Axios.interceptors.request.eject(this.reqInterceptor);
-            Axios.interceptors.response.eject(this.resInterceptor);
+            Axios.interceptors.request.eject(this.reqInterceptor)
+            Axios.interceptors.response.eject(this.resInterceptor)
         }
 
         errorConfirmedHandler = () => {
-            this.setState({ error: null });
-        };
+            this.setState({ error: null })
+        }
 
         render() {
             return (
@@ -44,16 +38,8 @@ const withErrorHandler = (WrappedComponent, Axios) => {
                     </Modal>
                     <WrappedComponent {...this.props} />
                 </Fragment>
-            );
+            )
         }
-    }
-
-    return connect(null, mapDispatchToProps)(Wrapper);
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        refreshAccessToken: () => dispatch(actions.refreshAccessToken())
     }
 }
 

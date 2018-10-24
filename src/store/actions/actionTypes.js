@@ -8,3 +8,10 @@ export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const SET_TOKEN = 'SET_TOKEN';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const SET_STATUS = 'SET_STATUS';
+
+export const PREPARE_REQUEST = 'PREPARE_REQUEST';
+export const GET_RESOURCE = 'GET_RESOURCE';
+export const ADD_REQUEST = 'ADD_REQUEST';
+export const DELETE_REQUEST = 'DELETE_REQUEST';
+export const ADD_RESPONSE = 'ADD_RESPONSE';
+export const DELETE_RESPONSE = 'DELETE_RESPONSE';

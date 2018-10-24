@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
 import Form from '../base/Form/Form';
-import Axios from '../../connection/axios';
+// import Axios from '../../connection/axiosWithTokenHeader';
 import { fields as editFields } from './fields';
 import withBreadcrumb from '../../hoc/withBreadcrumb';
+import withResourceProvider from '../../hoc/withResourceProvider';
 
 editFields.password.validation = {};
 
@@ -22,22 +23,46 @@ class EditUsers extends Component {
     };
 
     componentDidMount() {
-        const axiosPromise = this.getFormData();
-        axiosPromise.then(fields => {
-            this.setState({ fields: fields, loading: false });
-        });
+        this.getFormData('formData');
+        // const axiosPromise = this.getFormData('formData');
+        // axiosPromise.then(fields => {
+        //     this.setState({ fields: fields, loading: false });
+        // });
     }
 
-    getFormData = () => {
-        const axiosPromise = Axios.get('api/users/' + this.props.match.params.id + '/edit')
-            .then(({ data }) => {
-                return this.makeData(data);
-            });
-        axiosPromise.catch(error => {
-            console.log(error);
-        });
-        return axiosPromise;
+    componentDidUpdate() {
+        const response = this.props.editUser;
+        if(response) {
+            this.props.deleteResponse('editUser');
+            const fields = this.makeData(response.data);
+            if('formData' === response.title) {
+                this.setState({ fields: fields, loading: false });
+            }
+            if('reset' === response.title) {
+                this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+            }
+        }
     }
+
+    getFormData = requestTitle => {
+        const request = {
+            method: 'get',
+            url: 'api/users/' + this.props.match.params.id + '/edit',
+        };
+
+        this.props.prepareRequest(request, 'editUser', requestTitle);
+    }
+
+    // getFormData = () => {
+    //     const axiosPromise = Axios.get('api/users/' + this.props.match.params.id + '/edit')
+    //         .then(({ data }) => {
+    //             return this.makeData(data);
+    //         });
+    //     axiosPromise.catch(error => {
+    //         console.log(error);
+    //     });
+    //     return axiosPromise;
+    // }
 
     makeData = (data) => {
         const fields = JSON.parse(JSON.stringify(editFields));
@@ -48,10 +73,11 @@ class EditUsers extends Component {
     }
 
     reset = () => {
-        const axiosPromise = this.getFormData();
-        axiosPromise.then(fields => {
-            this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
-        });
+        this.getFormData('reset');
+        // const axiosPromise = this.getFormData('reset');
+        // axiosPromise.then(fields => {
+        //     this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+        // });
     }
 
     buttons = [
@@ -92,4 +118,4 @@ class EditUsers extends Component {
     }
 }
 
-export default withBreadcrumb(EditUsers, breadcrumb);
+export default withBreadcrumb(withResourceProvider(EditUsers, 'editUser'), breadcrumb);

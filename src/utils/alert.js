@@ -12,3 +12,11 @@ export const alert = (message) => {
         offset: 100
     });
 }
+
+export const networkErrorAlert = () => {
+    const alertMessage = {
+        type: 'error',
+        message: 'خطا در ارتباط با سرور'
+    };
+    alert(alertMessage);
+}

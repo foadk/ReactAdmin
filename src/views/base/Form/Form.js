@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import Button from './../formElements/Button';
 import FormElement from '../formElements/FormElement';
 import { checkValidity } from '../../../utils/validation';
-import Axios from '../../../connection/axios';
-import withErrorHandler from '../../../hoc/withErrorHandler';
+import withResourceProvider from '../../../hoc/withResourceProvider';
+// import Axios from '../../../connection/axiosWithTokenHeader';
+// import withErrorHandler from '../../../hoc/withErrorHandler';
 
 class Form extends Component {
 
@@ -20,6 +21,17 @@ class Form extends Component {
             fields[field].touched = false;
         }
         this.setState({ fields: fields });
+    }
+
+    componentDidUpdate() {
+        const response = this.props.form;
+        if (response) {
+            this.props.deleteResponse('form');
+            if ('submit' === response.title) {
+                this.setState({ loading: false });
+                this.resetForm();
+            }
+        }
     }
 
     onChangeHandler = (event, fieldId) => {
@@ -54,13 +66,22 @@ class Form extends Component {
         // if (!formIsValid) return;
         this.setState({ loading: true });
         const submitType = this.props.submitType ? this.props.submitType : 'post';
-        Axios[submitType](this.props.submitURL, submitFields)
-            .then(res => {
-                this.setState({ loading: false });
-                this.resetForm();
-            }).catch(error => {
-                this.setState({ loading: false });
-            });
+
+        const request = {
+            method: submitType,
+            url: this.props.submitURL,
+            data: submitFields
+        };
+
+        this.props.prepareRequest(request, 'form', 'submit');
+
+        // Axios[submitType](this.props.submitURL, submitFields)
+        //     .then(res => {
+        //         this.setState({ loading: false });
+        //         this.resetForm();
+        //     }).catch(error => {
+        //         this.setState({ loading: false });
+        //     });
     }
 
     resetForm = () => {
@@ -135,4 +156,4 @@ class Form extends Component {
 }
 
 // export default withErrorHandler(Form, Axios);
-export default Form;
+export default withResourceProvider(Form, 'form');

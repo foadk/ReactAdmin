@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import './Auth.css';
 import * as actions from '../../store/actions/index';
-import { clientId, clientSecret } from '../../env';
 
 class Login extends Component {
 
@@ -19,9 +18,8 @@ class Login extends Component {
     };
 
     onFormSubmitHandler = (event) => {
-        console.log('askdfj');
         event.preventDefault();
-        this.props.getAccessToken(clientId, clientSecret, this.state.email, this.state.password);
+        this.props.getAccessToken(this.state.email, this.state.password);
     }
 
     render() {
@@ -81,7 +79,7 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getAccessToken: (clientId, clientSecret, username, password) => dispatch(actions.getAccessToken(clientId, clientSecret, username, password))
+        getAccessToken: (username, password) => dispatch(actions.getAccessToken(username, password))
     }
 }
 

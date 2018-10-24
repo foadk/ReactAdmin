@@ -5,8 +5,7 @@ const initialState = {
     accessToken: null,
     refreshToken: null,
     expirationDate: null,
-    isAuthenticated: false,
-    status: 'loading', // loading, authenticated, notAuthenticated
+    status: 'loading', // loading, authenticated, notAuthenticated, unknown
 };
 
 const setToken = (state, action) => {
@@ -29,7 +28,10 @@ const authLogout = (state) => {
 };
 
 const setStatus = (state, action) => {
-    return updateObject(state, {status: action.status});
+    if (state.status !== action.status) {
+        return updateObject(state, { status: action.status });
+    }
+    return state;
 };
 
 const reducer = (state = initialState, action) => {

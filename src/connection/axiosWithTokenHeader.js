@@ -1,11 +1,18 @@
 import Axios from 'axios';
 import { alert } from '../utils/alert';
 
-const instance = Axios.create({
-    baseURL: 'http://127.0.0.1:8000/'
+const axiosWithTokenHeader = Axios.create({
+    baseURL: 'http://127.0.0.1:8000/',
+    headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    }
 });
 
-instance.interceptors.response.use(
+// axiosWithTokenHeader.defaults.headers.common['Accept'] = 'application/json';
+// axiosWithTokenHeader.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('accessToken');
+
+axiosWithTokenHeader.interceptors.response.use(
     result => {
         if (result.data.hasOwnProperty('messages')) {
             result.data.messages.forEach(message => {
@@ -15,7 +22,9 @@ instance.interceptors.response.use(
         return result;
     },
     error => {
-        console.log({...error});
+        console.log(error);
+        console.log(error.response);
+        console.log(error.response.status);
         // Handle server server side form validation failure
         if (error.message === 'Request failed with status code 422') {
             for (let errorKey in error.response.data.errors) {
@@ -32,4 +41,4 @@ instance.interceptors.response.use(
     }
 );
 
-export default instance;
+export default axiosWithTokenHeader;

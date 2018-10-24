@@ -9,35 +9,28 @@ import Login from './Layout/Auth/Login';
 import Register from './Layout/Auth/Register';
 import Layout from './Layout/Layout';
 import * as actions from './store/actions';
+import Backdrop from './components/UI/Backdrop/Backdrop';
 
 
 class App extends Component {
 
-    redirectPath = '/';
-
     componentDidMount() {
-        // this.redirectPath = this.props.location.pathname;
-        // console.log(this.redirectPath);
+        console.log('componentDidMount app');
         this.props.checkAuthState();
-    }
-
-    componentDidUpdate() {
-        // this.redirectPath = this.props.location.pathname;
-        // this.props.checkAuthState();
-        console.log('componentDidUpdate: ', this.props.location)
-        // console.log('DidUpdateAgain: ', this.redirectPath)
     }
 
     render() {
         let content = null;
-        if (this.props.authStatus === 'authenticated') {
-            content = (
-                <Switch>
-                    <Route path="/" component={Layout} />
-                    {/* <Redirect to={this.redirectPath} /> */}
-                </Switch>
-            );
+        let backdrop = null;
+        if (this.props.authStatus !== 'notAuthenticated') {
+            if (this.props.location.pathname === '/auth/login' ||
+                this.props.location.pathname === '/auth/register') {
+                content = <Redirect to="/" />;
+            } else {
+                content = <Route path="/" component={Layout} />;
+            }
         }
+        if (this.props.authStatus === 'loading') backdrop = <Backdrop show={true} />;
         if (this.props.authStatus === 'notAuthenticated') {
             content = (
                 <Switch>
@@ -45,10 +38,11 @@ class App extends Component {
                     <Route path="/auth/register" component={Register} />
                     <Redirect to="/auth/login" />
                 </Switch>
-            )
+            );
         }
         return (
             <Fragment>
+                {backdrop}
                 {content}
                 <Alert stack={{ limit: 10 }} />
             </Fragment>

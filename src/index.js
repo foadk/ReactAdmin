@@ -10,10 +10,12 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import UIReducer from './store/reducers/UI';
 import AuthReducer from './store/reducers/Auth';
+import ResourceReducer from './store/reducers/Resource';
 
 const rootReducer = combineReducers({
     UI: UIReducer,
-    Auth: AuthReducer
+    Auth: AuthReducer,
+    Resource: ResourceReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -21,11 +23,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
     applyMiddleware(Thunk)
 ));
-
-// const store = createStore(
-//     rootReducer,
-//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-// );
 
 const app = (
     <BrowserRouter>

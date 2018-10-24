@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import Axios from '../../connection/axios';
 
+import Axios from '../../connection/axiosWithTokenHeader';
 import Form from '../base/Form/Form';
 import { fields as formFields } from './fields';
 import withBreadcrumb from '../../hoc/withBreadcrumb';
+import withResourceProvider from '../../hoc/withResourceProvider';
 
 const breadcrumb = [
-    {text: 'اخبار', url: '/news'},
-    {text: 'ویرایش خبر', url: '', active: true}
+    { text: 'اخبار', url: '/news' },
+    { text: 'ویرایش خبر', url: '', active: true }
 ];
 
 class EditNews extends Component {
@@ -20,23 +21,49 @@ class EditNews extends Component {
     };
 
     componentDidMount() {
-        const axiosPromise = this.getFormData();
-        axiosPromise.then(fields => {
-            this.setState({ fields: fields, loading: false });
-        });
+        this.getFormData('formData');
+        // const axiosPromise = this.getFormData();
+        // axiosPromise.then(fields => {
+        //     this.setState({ fields: fields, loading: false });
+        // });
     }
 
-    getFormData = () => {
-        const axiosPromise = Axios.get('api/news/' + this.props.match.params.id + '/edit')
-            .then(({ data }) => {
-                const cats = this._prepareCats(data.cats);
-                formFields.news_cat_id.options = cats;
-                return this.makeData(data.fields);
-            });
-        axiosPromise.catch(error => {
-            console.log(error);
-        });
-        return axiosPromise;
+    componentDidUpdate() {
+        const response = this.props.editNews;
+        if (response) {
+            this.props.deleteResponse('editNews');
+            const data = response.data;
+            const cats = this._prepareCats(data.cats);
+            formFields.news_cat_id.options = cats;
+            const fields = this.makeData(data.fields);
+            if ('formData' === response.title) {
+                this.setState({ fields: fields, loading: false });
+            }
+            if ('reset' === response.title) {
+                this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+            }
+        }
+    }
+
+    getFormData = (requestTitle) => {
+
+        const request = {
+            method: 'get',
+            url: 'api/news/' + this.props.match.params.id + '/edit',
+        };
+
+        this.props.prepareRequest(request, 'editNews', requestTitle);
+
+        // const axiosPromise = Axios.get('api/news/' + this.props.match.params.id + '/edit')
+        //     .then(({ data }) => {
+        //         const cats = this._prepareCats(data.cats);
+        //         formFields.news_cat_id.options = cats;
+        //         return this.makeData(data.fields);
+        //     });
+        // axiosPromise.catch(error => {
+        //     console.log(error);
+        // });
+        // return axiosPromise;
     }
 
     _prepareCats = cats => {
@@ -47,7 +74,7 @@ class EditNews extends Component {
             delete item.title;
             return item;
         })
-        cats.unshift({value: '', text: 'انتخاب کنید'});
+        cats.unshift({ value: '', text: 'انتخاب کنید' });
         return cats;
     };
 
@@ -60,10 +87,11 @@ class EditNews extends Component {
     }
 
     reset = () => {
-        const axiosPromise = this.getFormData();
-        axiosPromise.then(fields => {
-            this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
-        });
+        this.getFormData('reset');
+        // const axiosPromise = this.getFormData();
+        // axiosPromise.then(fields => {
+        //     this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+        // });
     }
 
     buttons = [
@@ -104,4 +132,4 @@ class EditNews extends Component {
     }
 }
 
-export default withBreadcrumb(EditNews, breadcrumb);
+export default withBreadcrumb(withResourceProvider(EditNews, 'editNews'), breadcrumb);
