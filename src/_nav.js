@@ -49,6 +49,32 @@ export default {
     },
     {
       title: true,
+      name: 'مدیران و سطوح دسترسی',
+      wrapper: {            // optional wrapper object
+        element: '',        // required valid HTML5 element tag
+        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      },
+      class: ''             // optional class names space delimited list for title item ex: "text-center"
+    },
+    {
+      name: 'سطوح دسترسی',
+      url: '/permissions',
+      icon:'fa fa-ban',
+      children: [
+        {
+          name: 'مشاهده سطوح دسترسی',
+          url: '/permissions',
+          icon: 'icon-eye'
+        },
+        {
+          name: 'افزودن سطح دسترسی',
+          url: '/permissions/add',
+          icon: 'icon-plus'
+        }
+      ]
+    },
+    {
+      title: true,
       name: 'تم',
       wrapper: {            // optional wrapper object
         element: '',        // required valid HTML5 element tag
