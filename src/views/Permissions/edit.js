@@ -47,7 +47,7 @@ class EditPermissions extends Component {
         this.props.prepareRequest(request, 'editPermission', requestTitle);
     }
 
-    makeData = (data) => {
+    makeData = data => {
         const fields = JSON.parse(JSON.stringify(editFields));
         for (let field in fields) {
             fields[field].value = data[field] ? data[field] : '';
