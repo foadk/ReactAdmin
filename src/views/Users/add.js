@@ -23,8 +23,12 @@ const activeSidebarItem = 'افزودن کاربر';
 
 class AddUsers extends Component {
 
+    state = {
+        key: 1
+    };
+
     reset = () => {
-        this.forceUpdate();
+        this.setState({ key: this.state.key + 1 });
     }
 
     render() {
@@ -36,6 +40,7 @@ class AddUsers extends Component {
                 formId="addUserForm"
                 submitURL="api/users"
                 reset={this.reset}
+                key={this.state.key}
             />
         );
     }

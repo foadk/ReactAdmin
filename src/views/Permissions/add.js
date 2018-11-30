@@ -16,15 +16,19 @@ const buttons = [
 ];
 
 const breadcrumb = [
-    {text: 'دسترسی ها', url: '/permissions'},
-    {text: 'افزودن دسترسی', url: '', active: true}
+    { text: 'دسترسی ها', url: '/permissions' },
+    { text: 'افزودن دسترسی', url: '', active: true }
 ];
 const activeSidebarItem = 'افزودن دسترسی';
 
 class AddPermissions extends Component {
 
+    state = {
+        key: 1
+    };
+
     reset = () => {
-        this.forceUpdate();
+        this.setState({ key: this.state.key + 1 });
     }
 
     render() {
@@ -36,6 +40,7 @@ class AddPermissions extends Component {
                 formId="addPermissionForm"
                 submitURL="api/permissions"
                 reset={this.reset}
+                key={this.state.key}
             />
         );
     }

@@ -149,7 +149,7 @@ class Form extends Component {
                         </div>
                     </div>
                 </div>
-                <button onClick={() => this.props.changeKey()} >load</button>
+                <button onClick={() => this.resetForm()} >load</button>
             </div >
         );
     }
