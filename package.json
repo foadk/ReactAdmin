@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@kenshooui/react-multi-select": "^1.0.61",
     "axios": "^0.18.0",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",

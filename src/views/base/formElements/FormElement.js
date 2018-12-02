@@ -5,6 +5,7 @@ import Select from './Select';
 import TextEditor from './TextEditor';
 import TextArea from './TextArea';
 import CheckBox from './CheckBox';
+import KenshooMultiSelect from './MultiSelect';
 
 const formElement = (props) => {
     let element = null;
@@ -38,6 +39,12 @@ const formElement = (props) => {
             break;
         case 'checkbox':
             element = <CheckBox
+                {...props.field.config}
+                id={props.field.id}
+                changed={props.changed} />;
+            break;
+        case 'multiSelect':
+            element = <KenshooMultiSelect
                 {...props.field.config}
                 id={props.field.id}
                 changed={props.changed} />;

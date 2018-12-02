@@ -14,6 +14,10 @@ const Permissions = asyncComponent(() => import('./views/Permissions'));
 const AddPermissions = asyncComponent(() => import('./views/Permissions/add'));
 const EditPermissions = asyncComponent(() => import('./views/Permissions/edit'));
 
+const Roles = asyncComponent(() => import('./views/Roles'));
+const AddRoles = asyncComponent(() => import('./views/Roles/add'));
+const EditRoles = asyncComponent(() => import('./views/Roles/edit'));
+
 const routes = [
     {name: 'Cards', path: '/cards', exact: true, component: Cards},
 
@@ -28,6 +32,10 @@ const routes = [
     {name: 'Permissions', path: '/permissions', exact: true, component: Permissions},
     {name: 'AddPermissions', path: '/permissions/add', component: AddPermissions},
     {name: 'EditPermissions', path: '/permissions/edit/:id', component: EditPermissions},
+
+    {name: 'Roles', path: '/roles', exact: true, component: Roles},
+    {name: 'AddRoles', path: '/roles/add', component: AddRoles},
+    {name: 'EditRoles', path: '/roles/edit/:id', component: EditRoles},
 ];
 
 export default routes;

@@ -1,0 +1,20 @@
+.ReactVirtualized__Grid {
+    direction: rtl !important;
+}
+
+.kn-column__column___3Iwzx {
+    border-right: none;
+    border-left: 1px solid #dddddd;
+}
+
+.kn-search__icon___1frx4 {
+    padding-left: 10px;
+}
+
+.has-danger {
+    border-color: #f86c6b;
+}
+
+.has-success {
+    border-color: #4dbd74;
+}

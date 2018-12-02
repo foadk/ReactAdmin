@@ -28,8 +28,11 @@ class Form extends Component {
         if (response) {
             this.props.deleteResponse('form');
             if ('submit' === response.title) {
+                if ('success' === response.status)
+                    this.resetForm();
+            }
+            if ('error' === response.status) {
                 this.setState({ loading: false });
-                this.resetForm();
             }
         }
     }
@@ -63,7 +66,7 @@ class Form extends Component {
         }
         this.setState({ fields: fields });
 
-        // if (!formIsValid) return;
+        if (!formIsValid) return;
         this.setState({ loading: true });
         const submitType = this.props.submitType ? this.props.submitType : 'post';
 
@@ -89,7 +92,6 @@ class Form extends Component {
     }
 
     render() {
-
         const fieldsArray = [];
         let chunk = [];
         let cols = 0;
@@ -97,8 +99,8 @@ class Form extends Component {
         const fields = JSON.parse(JSON.stringify(this.state.fields));
         for (let field in fields) {
             let fieldCols = 6;
-            if(fields[field].elementType == 'textEditor') fieldCols = 12;
-            if(fields[field].cols) fieldCols = fields[field].cols;
+            if (['textEditor', 'multiSelect'].includes(fields[field].elementType)) fieldCols = 12;
+            if (fields[field].cols) fieldCols = fields[field].cols;
             cols += fieldCols;
             if (cols <= 12) {
                 chunk.push({ id: field, config: this.state.fields[field] });

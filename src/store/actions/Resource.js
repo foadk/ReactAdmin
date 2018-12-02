@@ -20,6 +20,7 @@ export const getResource = (accessToken, request, consumer, responseTitle) => di
         }
     }).then(response => {
         const generatedResponse = {
+            status: 'success',
             title: responseTitle,
             data: response.data
         };
@@ -29,6 +30,12 @@ export const getResource = (accessToken, request, consumer, responseTitle) => di
         if (error.message === 'Network Error') {
             networkErrorAlert();
         }
+        const generatedError = {
+            status: 'error',
+            title: responseTitle,
+            error: error
+        };
+        dispatch(addResponse(generatedError, consumer));
     });
 };
 

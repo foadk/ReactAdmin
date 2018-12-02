@@ -10,10 +10,6 @@ export default {
       },
     },
     {
-      name: 'کارت ها',
-      url: '/cards'
-    },
-    {
       name: 'کاربران',
       url: '/users',
       icon:'icon-people',
@@ -69,6 +65,23 @@ export default {
         {
           name: 'افزودن سطح دسترسی',
           url: '/permissions/add',
+          icon: 'icon-plus'
+        }
+      ]
+    },
+    {
+      name: 'گروه های کاربری',
+      url: '/roles',
+      icon:'fa fa-users',
+      children: [
+        {
+          name: 'مشاهده گروه های کاربری',
+          url: '/roles',
+          icon: 'icon-eye'
+        },
+        {
+          name: 'افزودن گروه کاربری',
+          url: '/roles/add',
           icon: 'icon-plus'
         }
       ]
