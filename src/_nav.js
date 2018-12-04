@@ -12,7 +12,7 @@ export default {
     {
       name: 'کاربران',
       url: '/users',
-      icon:'icon-people',
+      icon: 'icon-people',
       children: [
         {
           name: 'مشاهده کاربران',
@@ -55,7 +55,7 @@ export default {
     {
       name: 'سطوح دسترسی',
       url: '/permissions',
-      icon:'fa fa-ban',
+      icon: 'fa fa-ban',
       children: [
         {
           name: 'مشاهده سطوح دسترسی',
@@ -72,7 +72,7 @@ export default {
     {
       name: 'گروه های کاربری',
       url: '/roles',
-      icon:'fa fa-users',
+      icon: 'fa fa-users',
       children: [
         {
           name: 'مشاهده گروه های کاربری',
@@ -82,6 +82,23 @@ export default {
         {
           name: 'افزودن گروه کاربری',
           url: '/roles/add',
+          icon: 'icon-plus'
+        }
+      ]
+    },
+    {
+      name: 'مدیران',
+      url: '/admins',
+      icon: 'fa fa-users',
+      children: [
+        {
+          name: 'مشاهده مدیران',
+          url: '/admins',
+          icon: 'icon-eye'
+        },
+        {
+          name: 'افزودن مدیر',
+          url: '/admins/add',
           icon: 'icon-plus'
         }
       ]

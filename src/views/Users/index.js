@@ -16,7 +16,7 @@ class Users extends Component {
                     <div className='card'>
                         <div className="card-header">لیست کاربران</div>
                         <div className='card-body'>
-                            <Datatable url='api/users/' />
+                            <Datatable route='users' />
                         </div>
                     </div>
                 </div>

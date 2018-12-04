@@ -65,7 +65,7 @@ class Permissions extends Component {
                             </div>
                         </div>
                         <div className='card-body'>
-                            <Datatable url='api/permissions/' key={key} />
+                            <Datatable route='permissions' key={key} />
                         </div>
                     </div>
                 </div>

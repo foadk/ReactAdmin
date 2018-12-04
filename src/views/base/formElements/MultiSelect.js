@@ -38,7 +38,6 @@ const kenshooMultiSelect = props => (
                     selectAllMessage: 'انتخاب همه',
                     clearAllMessage: 'حذف همه'
                 }}
-                // selectionStatusRenderer={(<SelectionStatus clearAllMessage='حذف همه' />)}
             />
         </div>
     </div>

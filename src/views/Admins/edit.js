@@ -6,11 +6,11 @@ import withBreadcrumb from '../../hoc/withBreadcrumb';
 import withResourceProvider from '../../hoc/withResourceProvider';
 
 const breadcrumb = [
-    { text: 'گروه های کاربری', url: '/roles' },
-    { text: 'ویرایش گروه کاربری', url: '', active: true }
+    { text: 'مدیران', url: '/admins' },
+    { text: 'ویرایش مدیر', url: '', active: true }
 ];
 
-class EditRoles extends Component {
+class EditAdmins extends Component {
 
     state = {
         fields: {},
@@ -24,12 +24,14 @@ class EditRoles extends Component {
     }
 
     componentDidUpdate() {
-        const response = this.props.editRoles;
+        const response = this.props.editAdmins;
         if (response) {
-            this.props.deleteResponse('editRoles');
+            this.props.deleteResponse('editAdmins');
             const data = response.data;
-            const permissionGroups = this._preparePermissionGropus(data.permissionGroups);
-            formFields.permission_group_ids.items = permissionGroups;
+            console.log(data.fields)
+            const roles = this._prepareRoles(data.roles);
+            formFields.role_ids.items = roles;
+            formFields.password.validation={};
             const fields = this.makeData(data.fields);
             if ('formData' === response.title) {
                 this.setState({ fields: fields, loading: false });
@@ -44,19 +46,21 @@ class EditRoles extends Component {
 
         const request = {
             method: 'get',
-            url: 'api/roles/' + this.props.match.params.id + '/edit',
+            url: 'api/admins/' + this.props.match.params.id + '/edit',
         };
 
-        this.props.prepareRequest(request, 'editRoles', requestTitle);
+        this.props.prepareRequest(request, 'editAdmins', requestTitle);
     }
 
-    _preparePermissionGropus = permissionGropus => {
-        permissionGropus.map(item => {
+    _prepareRoles = roles => {
+        roles.map(item => {
+            item.value = item.id
             item.label = item.title;
             delete item.title;
+            delete item.id;
             return item;
         })
-        return permissionGropus;
+        return roles;
     };
 
     makeData = (data) => {
@@ -75,7 +79,7 @@ class EditRoles extends Component {
         {
             type: 'submit',
             classes: 'btn-success',
-            form: 'editRolesForm',
+            form: 'editAdminsForm',
             icon: 'fa fa-dot-circle-o',
             text: ' ثبت',
             cols: 6,
@@ -98,8 +102,8 @@ class EditRoles extends Component {
                     fields={this.state.fields}
                     buttons={this.buttons}
                     formTitle="ویرایش مدیر"
-                    formId="editRolesForm"
-                    submitURL={"api/roles/" + this.props.match.params.id}
+                    formId="editAdminsForm"
+                    submitURL={"api/admins/" + this.props.match.params.id}
                     submitType="put"
                     reset={this.reset}
                     key={this.state.key}
@@ -110,4 +114,4 @@ class EditRoles extends Component {
     }
 }
 
-export default withBreadcrumb(withResourceProvider(EditRoles, 'editRoles'), breadcrumb);
+export default withBreadcrumb(withResourceProvider(EditAdmins, 'editAdmins'), breadcrumb);

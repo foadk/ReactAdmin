@@ -10,6 +10,7 @@ const input = (props) => (
                 {props.label + ":"}
             </label>
             <input type={props.elementType}
+                autoComplete={props.elementType === 'password' ? "new-password" : null}
                 id={props.id}
                 name={props.name}
                 value={props.value}

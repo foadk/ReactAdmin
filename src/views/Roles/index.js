@@ -16,7 +16,7 @@ class Roles extends Component {
                     <div className='card'>
                         <div className="card-header">لیست گروه های کاربری</div>
                         <div className='card-body'>
-                            <Datatable url='api/roles/' />
+                            <Datatable route='roles' />
                         </div>
                     </div>
                 </div>

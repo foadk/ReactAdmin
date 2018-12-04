@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Datatable from '../base/Datatable/Datatable';
+
 import withBreadcrumb from '../../hoc/withBreadcrumb';
 import withActiveSidebarItem from '../../hoc/withActiveSidebarItem';
 
-const activeSidebarItem = 'مشاهده اخبار';
-
-const breadcrumb = [{text: 'اخبار', url: '', active: true}];
+const breadcrumb = [{ text: 'مدیران', url: '', active: true }];
+const activeSidebarItem = 'مشاهده مدیران';
 
 class Users extends Component {
 
@@ -14,9 +14,9 @@ class Users extends Component {
             <div className='row'>
                 <div className='col-md-12'>
                     <div className='card'>
-                        <div className="card-header">لیست اخبار</div>
+                        <div className="card-header">لیست مدیران</div>
                         <div className='card-body'>
-                            <Datatable route='news' />
+                            <Datatable route='admins' />
                         </div>
                     </div>
                 </div>

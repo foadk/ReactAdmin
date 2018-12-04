@@ -60,7 +60,7 @@ class Datatable extends Component {
     };
 
     redirectToEidtPage = (id) => {
-        this.props.history.push('/' + this.state.table + '/edit/' + id);
+        this.props.history.push('/' + this.props.route + '/edit/' + id);
     };
 
     deleteIconClickedHandler = (id) => {
@@ -74,7 +74,7 @@ class Datatable extends Component {
 
         const request = {
             method: 'delete',
-            url: this.props.url + id,
+            url: 'api/' . this.props.route + '/' + id,
         };
 
         this.props.prepareRequest(request, 'datatable', 'delete');
@@ -103,7 +103,7 @@ class Datatable extends Component {
 
         const request = {
             method: 'post',
-            url: this.props.url + 'datatable',
+            url: 'api/' + this.props.route + '/' + 'datatable',
             data: {
                 page: state.page,
                 pageSize: state.pageSize,

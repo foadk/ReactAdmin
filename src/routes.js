@@ -1,7 +1,5 @@
 import asyncComponent from './hoc/asyncComponent';
 
-const Cards = asyncComponent(() => import('./views/Cards/Cards'));
-
 const Users = asyncComponent(() => import('./views/Users'));
 const AddUsers = asyncComponent(() => import('./views/Users/add'));
 const EditUsers = asyncComponent(() => import('./views/Users/edit'));
@@ -18,9 +16,11 @@ const Roles = asyncComponent(() => import('./views/Roles'));
 const AddRoles = asyncComponent(() => import('./views/Roles/add'));
 const EditRoles = asyncComponent(() => import('./views/Roles/edit'));
 
-const routes = [
-    {name: 'Cards', path: '/cards', exact: true, component: Cards},
+const Admins = asyncComponent(() => import('./views/Admins'));
+const AddAdmins = asyncComponent(() => import('./views/Admins/add'));
+const EditAdmins = asyncComponent(() => import('./views/Admins/edit'));
 
+const routes = [
     {name: 'Users', path: '/users', exact: true, component: Users},
     {name: 'AddUsers', path: '/users/add', component: AddUsers},
     {name: 'EditUsers', path: '/users/edit/:id', component: EditUsers},
@@ -36,6 +36,10 @@ const routes = [
     {name: 'Roles', path: '/roles', exact: true, component: Roles},
     {name: 'AddRoles', path: '/roles/add', component: AddRoles},
     {name: 'EditRoles', path: '/roles/edit/:id', component: EditRoles},
+
+    {name: 'Admins', path: '/admins', exact: true, component: Admins},
+    {name: 'AddAdmins', path: '/admins/add', component: AddAdmins},
+    {name: 'EditAdmins', path: '/admins/edit/:id', component: EditAdmins},
 ];
 
 export default routes;
