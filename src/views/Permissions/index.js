@@ -5,6 +5,9 @@ import withBreadcrumb from '../../hoc/withBreadcrumb';
 import withActiveSidebarItem from '../../hoc/withActiveSidebarItem';
 import withResourceProvider from '../../hoc/withResourceProvider';
 import Button from '../base/formElements/Button';
+import asyncComponent from '../../hoc/asyncComponent';
+
+const QuickEdit = asyncComponent(() => import('./edit'), 'QuickEdit');
 
 const activeSidebarItem = 'مشاهده دسترسی ها';
 
@@ -65,7 +68,7 @@ class Permissions extends Component {
                             </div>
                         </div>
                         <div className='card-body'>
-                            <Datatable route='permissions' key={key} />
+                            <Datatable route='permissions' key={key} QuickEdit={QuickEdit} />
                         </div>
                     </div>
                 </div>

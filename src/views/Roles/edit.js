@@ -44,7 +44,7 @@ class EditRoles extends Component {
 
         const request = {
             method: 'get',
-            url: 'api/roles/' + this.props.match.params.id + '/edit',
+            url: 'api/roles/' + (this.props.resourceId ? this.props.resourceId : this.props.match.params.id) + '/edit',
         };
 
         this.props.prepareRequest(request, 'editRoles', requestTitle);
@@ -99,7 +99,7 @@ class EditRoles extends Component {
                     buttons={this.buttons}
                     formTitle="ویرایش مدیر"
                     formId="editRolesForm"
-                    submitURL={"api/roles/" + this.props.match.params.id}
+                    submitURL={"api/roles/" + (this.props.resourceId ? this.props.resourceId : this.props.match.params.id)}
                     submitType="put"
                     reset={this.reset}
                     key={this.state.key}
@@ -111,3 +111,4 @@ class EditRoles extends Component {
 }
 
 export default withBreadcrumb(withResourceProvider(EditRoles, 'editRoles'), breadcrumb);
+export const QuickEdit = withResourceProvider(EditRoles, 'editRoles');

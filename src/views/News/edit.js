@@ -49,7 +49,7 @@ class EditNews extends Component {
 
         const request = {
             method: 'get',
-            url: 'api/news/' + this.props.match.params.id + '/edit',
+            url: 'api/news/' + (this.props.resourceId ? this.props.resourceId : this.props.match.params.id) + '/edit',
         };
 
         this.props.prepareRequest(request, 'editNews', requestTitle);
@@ -121,7 +121,7 @@ class EditNews extends Component {
                     buttons={this.buttons}
                     formTitle="ویرایش کاربر"
                     formId="editNewsForm"
-                    submitURL={"api/news/" + this.props.match.params.id}
+                    submitURL={"api/news/" + (this.props.resourceId ? this.props.resourceId : this.props.match.params.id)}
                     submitType="put"
                     reset={this.reset}
                     key={this.state.key}
@@ -133,3 +133,4 @@ class EditNews extends Component {
 }
 
 export default withBreadcrumb(withResourceProvider(EditNews, 'editNews'), breadcrumb);
+export const QuickEdit = withResourceProvider(EditNews, 'editNews');

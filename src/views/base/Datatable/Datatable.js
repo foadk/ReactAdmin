@@ -23,6 +23,8 @@ class Datatable extends Component {
         loading: true,
         deleting: false,
         deletingItemId: null,
+        quickEdit: false,
+        editResourceId: null,
         error: null
     };
 
@@ -56,11 +58,18 @@ class Datatable extends Component {
     actionIcons = {
         delete: { icon: 'trash', title: 'حذف', click: (id) => this.deleteIconClickedHandler(id) },
         edit: { icon: 'edit', title: 'ویرایش', click: (id) => this.redirectToEidtPage(id) },
-        quick_edit: { icon: 'pencil', title: 'ویرایش سریع', click: () => { } },
+        quick_edit: { icon: 'pencil', title: 'ویرایش سریع', click: (id) => this.quickEditClickedHandler(id) },
     };
 
     redirectToEidtPage = (id) => {
         this.props.history.push('/' + this.props.route + '/edit/' + id);
+    };
+
+    quickEditClickedHandler = (id) => {
+        this.setState({
+            quickEdit: true,
+            editResourceId: id
+        });
     };
 
     deleteIconClickedHandler = (id) => {
@@ -74,7 +83,7 @@ class Datatable extends Component {
 
         const request = {
             method: 'delete',
-            url: 'api/' . this.props.route + '/' + id,
+            url: 'api/' + this.props.route + '/' + id,
         };
 
         this.props.prepareRequest(request, 'datatable', 'delete');
@@ -82,6 +91,11 @@ class Datatable extends Component {
 
     deleteCanceledHandler = () => {
         this.setState({ deleting: false });
+    };
+
+    quickEditCanceledHandler = () => {
+        this.setState({ quickEdit: false, editResourceId: null });
+        this.selectTable.fireFetchData();
     };
 
     addActionsToRows = (rows, actions) => {
@@ -116,6 +130,12 @@ class Datatable extends Component {
     };
 
     render() {
+        let editModal = null;
+        if (this.state.quickEdit) {
+            editModal = <Modal show={this.state.quickEdit} modalClosed={this.quickEditCanceledHandler} >
+                <this.props.QuickEdit resourceId={this.state.editResourceId} />
+            </Modal>
+        }
         return (
             <Fragment>
                 <Modal show={this.state.deleting} modalClosed={this.deleteCanceledHandler} >
@@ -124,6 +144,7 @@ class Datatable extends Component {
                         { title: 'انصراف', type: 'default', click: () => this.deleteCanceledHandler() },
                     ]}>آیا از حذف آیتم با شناسه {this.state.deletingItemId} اطمینان دارید؟</Dialog>
                 </Modal>
+                {editModal}
                 <ReactTable
                     getTableProps={() => ({ style: { display: 'block' } })}
                     ref={(r) => {

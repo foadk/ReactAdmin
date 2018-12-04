@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-const asyncComponent = (importComponent) => {
+const asyncComponent = (importComponent, NamedExport = null) => {
+    NamedExport = NamedExport ? NamedExport : 'default';
     return class extends Component {
 
         state = {
@@ -10,7 +11,7 @@ const asyncComponent = (importComponent) => {
         componentDidMount() {
             importComponent()
                 .then(cmp => {
-                    this.setState({ component: cmp.default })
+                    this.setState({ component: cmp[NamedExport] })
                 });
         }
 

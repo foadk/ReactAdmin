@@ -47,7 +47,7 @@ class EditUsers extends Component {
     getFormData = requestTitle => {
         const request = {
             method: 'get',
-            url: 'api/users/' + this.props.match.params.id + '/edit',
+            url: 'api/users/' + (this.props.resourceId ? this.props.resourceId : this.props.match.params.id) + '/edit',
         };
 
         this.props.prepareRequest(request, 'editUser', requestTitle);
@@ -107,7 +107,7 @@ class EditUsers extends Component {
                     buttons={this.buttons}
                     formTitle="ویرایش کاربر"
                     formId="editUserForm"
-                    submitURL={"api/users/" + this.props.match.params.id}
+                    submitURL={"api/users/" + (this.props.resourceId ? this.props.resourceId : this.props.match.params.id)}
                     submitType="put"
                     reset={this.reset}
                     key={this.state.key}
@@ -119,3 +119,4 @@ class EditUsers extends Component {
 }
 
 export default withBreadcrumb(withResourceProvider(EditUsers, 'editUser'), breadcrumb);
+export const QuickEdit = withResourceProvider(EditUsers, 'editUser');

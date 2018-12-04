@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import Datatable from '../base/Datatable/Datatable';
 
+import Datatable from '../base/Datatable/Datatable';
 import withBreadcrumb from '../../hoc/withBreadcrumb';
 import withActiveSidebarItem from '../../hoc/withActiveSidebarItem';
+import asyncComponent from '../../hoc/asyncComponent';
+
+const QuickEdit = asyncComponent(() => import('./edit'), 'QuickEdit');
 
 const breadcrumb = [{ text: 'کاربران', url: '', active: true }];
 const activeSidebarItem = 'مشاهده کاربران';
@@ -16,7 +19,7 @@ class Users extends Component {
                     <div className='card'>
                         <div className="card-header">لیست کاربران</div>
                         <div className='card-body'>
-                            <Datatable route='users' />
+                            <Datatable route='users' QuickEdit={QuickEdit} />
                         </div>
                     </div>
                 </div>

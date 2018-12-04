@@ -46,7 +46,7 @@ class EditAdmins extends Component {
 
         const request = {
             method: 'get',
-            url: 'api/admins/' + this.props.match.params.id + '/edit',
+            url: 'api/admins/' + (this.props.resourceId ? this.props.resourceId : this.props.match.params.id) + '/edit',
         };
 
         this.props.prepareRequest(request, 'editAdmins', requestTitle);
@@ -103,7 +103,7 @@ class EditAdmins extends Component {
                     buttons={this.buttons}
                     formTitle="ویرایش مدیر"
                     formId="editAdminsForm"
-                    submitURL={"api/admins/" + this.props.match.params.id}
+                    submitURL={"api/admins/" + (this.props.resourceId ? this.props.resourceId : this.props.match.params.id)}
                     submitType="put"
                     reset={this.reset}
                     key={this.state.key}
@@ -115,3 +115,4 @@ class EditAdmins extends Component {
 }
 
 export default withBreadcrumb(withResourceProvider(EditAdmins, 'editAdmins'), breadcrumb);
+export const QuickEdit = withResourceProvider(EditAdmins, 'editAdmins');

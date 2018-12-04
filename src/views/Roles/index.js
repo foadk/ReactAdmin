@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Datatable from '../base/Datatable/Datatable';
 import withBreadcrumb from '../../hoc/withBreadcrumb';
 import withActiveSidebarItem from '../../hoc/withActiveSidebarItem';
+import asyncComponent from '../../hoc/asyncComponent';
+
+const QuickEdit = asyncComponent(() => import('./edit'), 'QuickEdit');
 
 const activeSidebarItem = 'مشاهده گروه های کاربری';
 
@@ -16,7 +19,7 @@ class Roles extends Component {
                     <div className='card'>
                         <div className="card-header">لیست گروه های کاربری</div>
                         <div className='card-body'>
-                            <Datatable route='roles' />
+                            <Datatable route='roles' QuickEdit={QuickEdit} />
                         </div>
                     </div>
                 </div>

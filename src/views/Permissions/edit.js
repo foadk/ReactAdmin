@@ -7,8 +7,8 @@ import withBreadcrumb from '../../hoc/withBreadcrumb';
 import withResourceProvider from '../../hoc/withResourceProvider';
 
 const breadcrumb = [
-    {text: 'دسترسی ها', url: '/permissions'},
-    {text: 'ویرایش دسترسی', url: '', active: true}
+    { text: 'دسترسی ها', url: '/permissions' },
+    { text: 'ویرایش دسترسی', url: '', active: true }
 ];
 
 class EditPermissions extends Component {
@@ -26,23 +26,29 @@ class EditPermissions extends Component {
 
     componentDidUpdate() {
         const response = this.props.editPermission;
-        if(response) {
-            this.props.deleteResponse('editPermission');
-            const fields = this.makeData(response.data);
-            if('formData' === response.title) {
-                this.setState({ fields: fields, loading: false });
-            }
-            if('reset' === response.title) {
-                this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+        if (response) {
+            console.log(response);
+            if ('success' === response.status) {
+                this.props.deleteResponse('editPermission');
+                const fields = this.makeData(response.data);
+                if ('formData' === response.title) {
+                    this.setState({ fields: fields, loading: false });
+                }
+                if ('reset' === response.title) {
+                    this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+                }
             }
         }
     }
 
     getFormData = requestTitle => {
+        console.log('helooo');
+        console.log(this.props.resourceId);
         const request = {
             method: 'get',
-            url: 'api/permissions/' + this.props.match.params.id + '/edit',
+            url: 'api/permissions/' + (this.props.resourceId ? this.props.resourceId : this.props.match.params.id) + '/edit',
         };
+        console.log(request);
 
         this.props.prepareRequest(request, 'editPermission', requestTitle);
     }
@@ -86,7 +92,7 @@ class EditPermissions extends Component {
                     buttons={this.buttons}
                     formTitle="ویرایش دسترسی"
                     formId="editPermissionForm"
-                    submitURL={"api/permissions/" + this.props.match.params.id}
+                    submitURL={"api/permissions/" + (this.props.resourceId ? this.props.resourceId : this.props.match.params.id)}
                     submitType="put"
                     reset={this.reset}
                     key={this.state.key}
@@ -98,3 +104,4 @@ class EditPermissions extends Component {
 }
 
 export default withBreadcrumb(withResourceProvider(EditPermissions, 'editPermission'), breadcrumb);
+export const QuickEdit = withResourceProvider(EditPermissions, 'editPermission');
