@@ -45,14 +45,18 @@ class AddNews extends Component {
         const response = this.props.addNews;
         if (response) {
             this.props.deleteResponse('addNews');
-            const data = response.data;
-            const cats = this._prepareCats(data.cats);
-            formFields.news_cat_id.options = cats;
-            if ('formData' === response.title) {
-                this.setState({ fields: formFields, loading: false });
-            }
-            if ('reset' === response.title) {
-                this.setState({ fields: formFields, loading: false, key: this.state.key + 1 });
+            if ('success' === response.status) {
+                const data = response.data;
+                const cats = this._prepareCats(data.cats);
+                formFields.news_cat_id.options = cats;
+                if ('formData' === response.title) {
+                    this.setState({ fields: formFields, loading: false });
+                }
+                if ('reset' === response.title) {
+                    this.setState({ fields: formFields, loading: false, key: this.state.key + 1 });
+                }
+            } else {
+                this.setState({loading: false});
             }
         }
     }

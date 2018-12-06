@@ -28,6 +28,15 @@ instance.interceptors.response.use(
                 });
             }
         }
+        if(403 === error.response.status) {
+            if('Not authorized.' === error.response.data.error) {
+                const alertMessage = {
+                    type: 'error',
+                    message: 'شما اجازه دسترسی به این بخش را ندارید!'
+                };
+                alert(alertMessage);
+            }
+        }
         return Promise.reject(error);
     }
 );

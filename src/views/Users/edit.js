@@ -9,8 +9,8 @@ import withResourceProvider from '../../hoc/withResourceProvider';
 editFields.password.validation = {};
 
 const breadcrumb = [
-    {text: 'کاربران', url: '/users'},
-    {text: 'ویرایش کاربر', url: '', active: true}
+    { text: 'کاربران', url: '/users' },
+    { text: 'ویرایش کاربر', url: '', active: true }
 ];
 
 class EditUsers extends Component {
@@ -32,14 +32,18 @@ class EditUsers extends Component {
 
     componentDidUpdate() {
         const response = this.props.editUser;
-        if(response) {
+        if (response) {
             this.props.deleteResponse('editUser');
-            const fields = this.makeData(response.data);
-            if('formData' === response.title) {
-                this.setState({ fields: fields, loading: false });
-            }
-            if('reset' === response.title) {
-                this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+            if ('success' === response.status) {
+                const fields = this.makeData(response.data);
+                if ('formData' === response.title) {
+                    this.setState({ fields: fields, loading: false });
+                }
+                if ('reset' === response.title) {
+                    this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+                }
+            } else {
+                this.setState({loading: false});
             }
         }
     }

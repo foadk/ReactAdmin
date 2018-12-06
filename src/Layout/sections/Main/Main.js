@@ -9,6 +9,7 @@ class Main extends Component {
             <main className="main">
                 <Breadcrumb />
                 <Content />
+                {/* <button onClick={() => {console.log(localStorage.getItem('accessToken'))}} >load</button> */}
             </main>
         );
     }

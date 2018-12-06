@@ -27,17 +27,21 @@ class EditAdmins extends Component {
         const response = this.props.editAdmins;
         if (response) {
             this.props.deleteResponse('editAdmins');
-            const data = response.data;
-            console.log(data.fields)
-            const roles = this._prepareRoles(data.roles);
-            formFields.role_ids.items = roles;
-            formFields.password.validation={};
-            const fields = this.makeData(data.fields);
-            if ('formData' === response.title) {
-                this.setState({ fields: fields, loading: false });
-            }
-            if ('reset' === response.title) {
-                this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+            if ('success' === response.status) {
+                const data = response.data;
+                console.log(data.fields)
+                const roles = this._prepareRoles(data.roles);
+                formFields.role_ids.items = roles;
+                formFields.password.validation = {};
+                const fields = this.makeData(data.fields);
+                if ('formData' === response.title) {
+                    this.setState({ fields: fields, loading: false });
+                }
+                if ('reset' === response.title) {
+                    this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+                }
+            } else {
+                this.setState({loading: false});
             }
         }
     }

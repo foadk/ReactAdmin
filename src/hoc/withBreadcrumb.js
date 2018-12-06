@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from '../store/actions/';
+import * as actions from '../store/actions';
 
 const withBreadcrumb = (WrappedComponent, breadcrumb) => {
     class Wrapper extends Component {

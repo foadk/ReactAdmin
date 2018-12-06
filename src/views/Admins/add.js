@@ -40,14 +40,18 @@ class AddAdmins extends Component {
         const response = this.props.addAdmins;
         if (response) {
             this.props.deleteResponse('addAdmins');
-            const data = response.data;
-            const roles = this._prepareRoles(data.roles);
-            formFields.role_ids.items = roles;
-            if ('formData' === response.title) {
-                this.setState({ fields: formFields, loading: false });
-            }
-            if ('reset' === response.title) {
-                this.setState({ fields: formFields, loading: false, key: this.state.key + 1 });
+            if ('success' === response.status) {
+                const data = response.data;
+                const roles = this._prepareRoles(data.roles);
+                formFields.role_ids.items = roles;
+                if ('formData' === response.title) {
+                    this.setState({ fields: formFields, loading: false });
+                }
+                if ('reset' === response.title) {
+                    this.setState({ fields: formFields, loading: false, key: this.state.key + 1 });
+                }
+            } else {
+                this.setState({loading: false});
             }
         }
     }

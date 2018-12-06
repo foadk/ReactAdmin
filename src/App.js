@@ -15,14 +15,13 @@ import Backdrop from './components/UI/Backdrop/Backdrop';
 class App extends Component {
 
     componentDidMount() {
-        console.log('componentDidMount app');
         this.props.checkAuthState();
     }
 
     render() {
         let content = null;
         let backdrop = null;
-        if (this.props.authStatus !== 'notAuthenticated') {
+        if (['authenticated', 'unknown'].includes(this.props.authStatus)) {
             if (this.props.location.pathname === '/auth/login' ||
                 this.props.location.pathname === '/auth/register') {
                 content = <Redirect to="/" />;
@@ -58,7 +57,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        checkAuthState: () => dispatch(actions.checkAuthState())
+        checkAuthState: () => dispatch(actions.checkAuthState()),
     }
 }
 

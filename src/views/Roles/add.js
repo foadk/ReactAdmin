@@ -40,14 +40,18 @@ class AddRoles extends Component {
         const response = this.props.addRoles;
         if (response) {
             this.props.deleteResponse('addRoles');
-            const data = response.data;
-            const permissionGroups = this._preparePermissionGropus(data.permissionGroups);
-            formFields.permission_group_ids.items = permissionGroups;
-            if ('formData' === response.title) {
-                this.setState({ fields: formFields, loading: false });
-            }
-            if ('reset' === response.title) {
-                this.setState({ fields: formFields, loading: false, key: this.state.key + 1 });
+            if ('success' === response.status) {
+                const data = response.data;
+                const permissionGroups = this._preparePermissionGropus(data.permissionGroups);
+                formFields.permission_group_ids.items = permissionGroups;
+                if ('formData' === response.title) {
+                    this.setState({ fields: formFields, loading: false });
+                }
+                if ('reset' === response.title) {
+                    this.setState({ fields: formFields, loading: false, key: this.state.key + 1 });
+                }
+            } else {
+                this.setState({loading: false});
             }
         }
     }

@@ -27,15 +27,19 @@ class EditRoles extends Component {
         const response = this.props.editRoles;
         if (response) {
             this.props.deleteResponse('editRoles');
-            const data = response.data;
-            const permissionGroups = this._preparePermissionGropus(data.permissionGroups);
-            formFields.permission_group_ids.items = permissionGroups;
-            const fields = this.makeData(data.fields);
-            if ('formData' === response.title) {
-                this.setState({ fields: fields, loading: false });
-            }
-            if ('reset' === response.title) {
-                this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+            if ('success' === response.status) {
+                const data = response.data;
+                const permissionGroups = this._preparePermissionGropus(data.permissionGroups);
+                formFields.permission_group_ids.items = permissionGroups;
+                const fields = this.makeData(data.fields);
+                if ('formData' === response.title) {
+                    this.setState({ fields: fields, loading: false });
+                }
+                if ('reset' === response.title) {
+                    this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+                }
+            } else {
+                this.setState({loading: false});
             }
         }
     }

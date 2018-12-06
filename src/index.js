@@ -11,11 +11,13 @@ import registerServiceWorker from './registerServiceWorker';
 import UIReducer from './store/reducers/UI';
 import AuthReducer from './store/reducers/Auth';
 import ResourceReducer from './store/reducers/Resource';
+import AuthorizationReducer from './store/reducers/Authorization';
 
 const rootReducer = combineReducers({
     UI: UIReducer,
     Auth: AuthReducer,
-    Resource: ResourceReducer
+    Resource: ResourceReducer,
+    Authorization: AuthorizationReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -32,15 +32,19 @@ class EditNews extends Component {
         const response = this.props.editNews;
         if (response) {
             this.props.deleteResponse('editNews');
-            const data = response.data;
-            const cats = this._prepareCats(data.cats);
-            formFields.news_cat_id.options = cats;
-            const fields = this.makeData(data.fields);
-            if ('formData' === response.title) {
-                this.setState({ fields: fields, loading: false });
-            }
-            if ('reset' === response.title) {
-                this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+            if ('success' === response.status) {
+                const data = response.data;
+                const cats = this._prepareCats(data.cats);
+                formFields.news_cat_id.options = cats;
+                const fields = this.makeData(data.fields);
+                if ('formData' === response.title) {
+                    this.setState({ fields: fields, loading: false });
+                }
+                if ('reset' === response.title) {
+                    this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
+                }
+            } else {
+                this.setState({loading: false});
             }
         }
     }

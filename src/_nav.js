@@ -1,6 +1,18 @@
 export default {
   items: [
     {
+      title: true,
+      name: 'مدیریت اطلاعات پایه',
+      wrapper: {
+        element: '',
+        attributes: {}
+      },
+      class: '',
+      permissions: ['admin.users.datatable', 'admin.users.create',
+        'admin.news.datatable', 'admin.news.create',
+      ],
+    },
+    {
       name: 'داشبورد',
       url: '/dashboard',
       icon: 'icon-speedometer',
@@ -13,16 +25,19 @@ export default {
       name: 'کاربران',
       url: '/users',
       icon: 'icon-people',
+      permissions: ['admin.users.datatable', 'admin.users.create'],
       children: [
         {
           name: 'مشاهده کاربران',
           url: '/users',
-          icon: 'icon-eye'
+          icon: 'icon-eye',
+          permissions: ['admin.users.datatable']
         },
         {
           name: 'افزودن کاربر',
           url: '/users/add',
-          icon: 'icon-plus'
+          icon: 'icon-plus',
+          permissions: ['admin.users.create'],
         }
       ]
     },
@@ -30,42 +45,52 @@ export default {
       name: 'اخبار',
       url: '/news',
       // icon:'icon-people',
+      permissions: ['admin.news.datatable', 'admin.news.create'],
       children: [
         {
           name: 'مشاهده اخبار',
           url: '/news',
-          icon: 'icon-eye'
+          icon: 'icon-eye',
+          permissions: ['admin.news.datatable'],
         },
         {
           name: 'افزودن خبر',
           url: '/news/add',
-          icon: 'icon-plus'
+          icon: 'icon-plus',
+          permissions: ['admin.news.create'],
         }
       ]
     },
     {
       title: true,
       name: 'مدیران و سطوح دسترسی',
-      wrapper: {            // optional wrapper object
-        element: '',        // required valid HTML5 element tag
-        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      wrapper: {
+        element: '',
+        attributes: {}
       },
-      class: ''             // optional class names space delimited list for title item ex: "text-center"
+      class: '',
+      permissions: ['admin.permissions.datatable', 'admin.permissions.create',
+        'admin.roles.datatable', 'admin.roles.create',
+        'admin.admins.datatable', 'admin.admins.create'
+      ],
     },
     {
       name: 'سطوح دسترسی',
       url: '/permissions',
       icon: 'fa fa-ban',
+      permissions: ['admin.permissions.datatable', 'admin.permissions.create'],
       children: [
         {
           name: 'مشاهده سطوح دسترسی',
           url: '/permissions',
-          icon: 'icon-eye'
+          icon: 'icon-eye',
+          permissions: ['admin.permissions.datatable'],
         },
         {
           name: 'افزودن سطح دسترسی',
           url: '/permissions/add',
-          icon: 'icon-plus'
+          icon: 'icon-plus',
+          permissions: ['admin.permissions.create'],
         }
       ]
     },
@@ -73,16 +98,19 @@ export default {
       name: 'گروه های کاربری',
       url: '/roles',
       icon: 'fa fa-users',
+      permissions: ['admin.roles.datatable', 'admin.roles.create'],
       children: [
         {
           name: 'مشاهده گروه های کاربری',
           url: '/roles',
-          icon: 'icon-eye'
+          icon: 'icon-eye',
+          permissions: ['admin.roles.datatable'],
         },
         {
           name: 'افزودن گروه کاربری',
           url: '/roles/add',
-          icon: 'icon-plus'
+          icon: 'icon-plus',
+          permissions: ['admin.roles.create'],
         }
       ]
     },
@@ -90,16 +118,19 @@ export default {
       name: 'مدیران',
       url: '/admins',
       icon: 'fa fa-users',
+      permissions: ['admin.admins.datatable', 'admin.admins.create'],
       children: [
         {
           name: 'مشاهده مدیران',
           url: '/admins',
-          icon: 'icon-eye'
+          icon: 'icon-eye',
+          permissions: ['admin.admins.datatable'],
         },
         {
           name: 'افزودن مدیر',
           url: '/admins/add',
-          icon: 'icon-plus'
+          icon: 'icon-plus',
+          permissions: ['admin.admins.create'],
         }
       ]
     },

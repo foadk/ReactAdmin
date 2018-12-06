@@ -33,24 +33,32 @@ class Datatable extends Component {
         if (response) {
             this.props.deleteResponse('datatable');
             if ('datatableData' === response.title) {
-                const data = response.data;
-                const headers = prepHeaders(data.headers);
-                // const headers = prepHeadersWithSections(res.data.headers);
-                const rows = this.addActionsToRows(data.rows, data.headers.actions);
-                this.setState({
-                    table: data.table,
-                    headers: headers,
-                    data: rows,
-                    pages: data.pages,
-                    loading: false,
-                });
+                if ('success' === response.status) {
+                    const data = response.data;
+                    const headers = prepHeaders(data.headers);
+                    // const headers = prepHeadersWithSections(res.data.headers);
+                    const rows = this.addActionsToRows(data.rows, data.headers.actions);
+                    this.setState({
+                        table: data.table,
+                        headers: headers,
+                        data: rows,
+                        pages: data.pages,
+                        loading: false,
+                    });
+                } else {
+                    this.setState({ loading: false, });
+                }
             }
             if ('delete' === response.title) {
-                this.selectTable.fireFetchData();
-                this.setState({
-                    deleting: false,
-                    deletingItemId: null
-                });
+                if ('success' === response.status) {
+                    this.selectTable.fireFetchData();
+                    this.setState({
+                        deleting: false,
+                        deletingItemId: null
+                    });
+                }
+            } else {
+                this.setState({ deleting: false, deletingItemId: null});
             }
         }
     }

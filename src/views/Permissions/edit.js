@@ -37,6 +37,8 @@ class EditPermissions extends Component {
                 if ('reset' === response.title) {
                     this.setState({ fields: fields, loading: false, key: this.state.key + 1 });
                 }
+            } else {
+                this.setState({loading: false});
             }
         }
     }
